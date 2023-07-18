@@ -29,6 +29,7 @@ public class Task {
     private LocalDateTime endDate;
     private LocalDateTime deadline;
     private LocalDateTime dateCreated;
+    private LocalDateTime lastModifiedDate;
 
     private boolean isFavorite;
 
@@ -40,5 +41,9 @@ public class Task {
 
     @Enumerated(value = EnumType.STRING)
     private DegreeOfImportance degreeOfImportance;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
