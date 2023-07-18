@@ -1,0 +1,36 @@
+package com.example.todo.model;
+
+
+import com.example.todo.enums.ReminderStatus;
+import com.example.todo.enums.RepetitionType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class Reminder {
+
+    @Id
+    @SequenceGenerator(sequenceName = "reminder_sequence",allocationSize = 1,name = "reminder_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reminder_sequence")
+    private Long id;
+
+    private String title;
+    private String description;
+
+    @Enumerated(value = EnumType.STRING)
+    private RepetitionType repetitionType;
+
+    private LocalDateTime dueDate;
+    private LocalDateTime dateCreated;
+    private LocalDateTime lastModifiedDate;
+
+    @Enumerated(value = EnumType.STRING)
+    private ReminderStatus status;
+}
