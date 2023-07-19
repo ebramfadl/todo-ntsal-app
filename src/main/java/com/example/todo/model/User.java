@@ -40,4 +40,16 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "users")
+    private List<Group> groups = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Issue> issues = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Invitation> invitations = new ArrayList<>();
+
 }

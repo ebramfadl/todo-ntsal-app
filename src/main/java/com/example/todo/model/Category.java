@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -23,4 +25,7 @@ public class Category {
 
     private LocalDateTime dateCreated;
     private LocalDateTime lastModifiedDate;
+
+    @OneToMany(mappedBy = "category")
+    private List<Task> tasks = new ArrayList<>();
 }

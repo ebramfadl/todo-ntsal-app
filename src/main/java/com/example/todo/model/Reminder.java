@@ -33,4 +33,8 @@ public class Reminder {
 
     @Enumerated(value = EnumType.STRING)
     private ReminderStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
 }

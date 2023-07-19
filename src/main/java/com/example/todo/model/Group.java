@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -24,4 +26,15 @@ public class Group {
 
     private LocalDateTime dateCreated;
     private LocalDateTime lastModifiedDate;
+
+    @ManyToMany
+    @JoinTable(
+            name = "enrollment",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "group")
+    private List<Invitation> invitations = new ArrayList<>();
 }

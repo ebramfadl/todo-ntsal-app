@@ -29,4 +29,12 @@ public class Invitation {
 
     //acceptance date
     //rejection date
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
 }
