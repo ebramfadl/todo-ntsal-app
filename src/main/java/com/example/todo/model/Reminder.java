@@ -29,7 +29,7 @@ public class Reminder {
 
     private LocalDateTime dueDate;
     private LocalDateTime dateCreated;
-    private LocalDateTime lastModifiedDate;
+//    private LocalDateTime lastModifiedDate;
 
     @Enumerated(value = EnumType.STRING)
     private ReminderStatus status;

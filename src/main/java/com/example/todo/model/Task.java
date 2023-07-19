@@ -24,16 +24,16 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_sequence")
     private Long id;
 
-    private String title;
+    private String tag;
     private String description;
 
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
     private LocalDateTime deadline;
-    private LocalDateTime dateCreated;
-    private LocalDateTime lastModifiedDate;
+//    private LocalDateTime startDate;
+//    private LocalDateTime endDate;
+//    private LocalDateTime dateCreated;
+//    private LocalDateTime lastModifiedDate;
 
-    private boolean isFavorite;
+//    private boolean isFavorite;
 
     @Enumerated(value = EnumType.STRING)
     private TaskStatus status;

@@ -24,34 +24,34 @@ public class SystemUser {
     private Long id;
     private String username;
     private String password;
-    private String email;
-    private String name;
+//    private String email;
+//    private String name;
 
-    private LocalDateTime registerationDate;
-    private LocalDateTime lastModifiedDate;
+//    private LocalDateTime registerationDate;
+//    private LocalDateTime lastModifiedDate;
 
-    private String address;
-    private String phoneNumber;
+//    private String address;
+//    private String phoneNumber;
 
-    @Enumerated(value = EnumType.STRING)
-    private UserRole role;
+//    @Enumerated(value = EnumType.STRING)
+//    private UserRole role;
 
-    @Enumerated(value = EnumType.STRING)
-    private UserStatus status;
+//    @Enumerated(value = EnumType.STRING)
+//    private UserStatus status;
 
     @OneToMany(mappedBy = "user")
     private List<Task> tasks = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "users")
-    private List<Team> teams = new ArrayList<>();
+//    @ManyToMany(mappedBy = "users")
+//    private List<Team> teams = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Issue> issues = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Issue> issues = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Notification> notifications = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Notification> notifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Invitation> invitations = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Invitation> invitations = new ArrayList<>();
 
 }
