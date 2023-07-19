@@ -1,4 +1,18 @@
 package com.example.todo.dao.repo;
 
-public interface TaskRepo {
+import com.example.todo.model.Category;
+import com.example.todo.model.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface TaskRepo extends JpaRepository<Task,Long> {
+
+    List<Task> findTasksByUserId(Long userId);
+
+    @Query("select c from Category c where exists (select t from Task t where t.category.id = :categoryId and t.user.id = :userId and c.id=:categoryId )")
+    Category findUserCategory(Long categoryId, Long userId);
 }

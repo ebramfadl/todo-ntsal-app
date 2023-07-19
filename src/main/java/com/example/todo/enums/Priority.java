@@ -1,5 +1,5 @@
 package com.example.todo.enums;
 
-public enum DegreeOfImportance {
+public enum Priority {
     LOW,MEDIUM,HIGH,CRITICAL,NONE
 }

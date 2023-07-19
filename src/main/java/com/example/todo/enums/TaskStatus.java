@@ -1,5 +1,5 @@
 package com.example.todo.enums;
 
 public enum TaskStatus {
-    COMPLETED,CANCELLED
+    COMPLETED,CANCELLED,PENDING
 }

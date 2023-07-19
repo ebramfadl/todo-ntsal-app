@@ -1,7 +1,7 @@
 package com.example.todo.model;
 
 
-import com.example.todo.enums.DegreeOfImportance;
+import com.example.todo.enums.Priority;
 import com.example.todo.enums.RepetitionType;
 import com.example.todo.enums.TaskStatus;
 import lombok.AllArgsConstructor;
@@ -30,7 +30,7 @@ public class Task {
     private LocalDateTime deadline;
 //    private LocalDateTime startDate;
 //    private LocalDateTime endDate;
-//    private LocalDateTime dateCreated;
+    private LocalDateTime dateCreated;
 //    private LocalDateTime lastModifiedDate;
 
 //    private boolean isFavorite;
@@ -42,17 +42,29 @@ public class Task {
     private RepetitionType repetitionType;
 
     @Enumerated(value = EnumType.STRING)
-    private DegreeOfImportance degreeOfImportance;
+    private Priority priority;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private SystemUser user;
 
     @OneToMany(mappedBy = "task")
-    private List<Reminder> reminders = new ArrayList<>();
+    private List<Reminder> reminders;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    public Task( String tag, String description, LocalDateTime deadline, RepetitionType repetitionType, Priority priority, SystemUser user, Category category) {
+        this.tag = tag;
+        this.description = description;
+        this.deadline = deadline;
+        this.repetitionType = repetitionType;
+        this.priority = priority;
+        this.user = user;
+        this.category = category;
+        dateCreated = LocalDateTime.now();
+        status = TaskStatus.PENDING;
+        reminders = new ArrayList<>();
+    }
 }

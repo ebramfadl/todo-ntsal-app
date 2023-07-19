@@ -24,6 +24,9 @@ public class SystemUser {
     private Long id;
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<>();
 //    private String email;
 //    private String name;
 
@@ -38,9 +41,6 @@ public class SystemUser {
 
 //    @Enumerated(value = EnumType.STRING)
 //    private UserStatus status;
-
-    @OneToMany(mappedBy = "user")
-    private List<Task> tasks = new ArrayList<>();
 
 //    @ManyToMany(mappedBy = "users")
 //    private List<Team> teams = new ArrayList<>();

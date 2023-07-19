@@ -2,6 +2,7 @@ package com.example.todo.controller;
 
 
 import com.example.todo.dto.TaskDto;
+import com.example.todo.dto.TaskPostDto;
 import com.example.todo.enums.SortBase;
 import com.example.todo.enums.SortType;
 import com.example.todo.service.TaskService;
@@ -29,9 +30,9 @@ public class TaskController {
         return getService().viewAllTasks(userId);
     }
 
-    @PostMapping(path = "/add")
-    public TaskDto addTask(@RequestBody TaskDto taskDto){
-        return getService().add(taskDto);
+    @PostMapping(path = "/create")
+    public TaskDto createTask(@RequestBody TaskPostDto taskPostDto){
+        return getService().create(taskPostDto);
     }
 
     @PutMapping(path = "/mark-completed/{taskId}")

@@ -24,7 +24,6 @@ public class Category {
     private String description;
 
     private LocalDateTime dateCreated;
-    private LocalDateTime lastModifiedDate;
 
     @OneToMany(mappedBy = "category")
     private List<Task> tasks = new ArrayList<>();
