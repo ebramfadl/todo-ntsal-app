@@ -32,9 +32,9 @@ public class Invitation {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private SystemUser user;
 
     @ManyToOne
-    @JoinColumn(name = "group_id")
-    private Group group;
+    @JoinColumn(name = "team_id")
+    private Team team;
 }

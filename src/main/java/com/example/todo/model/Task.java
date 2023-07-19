@@ -46,7 +46,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private SystemUser user;
 
     @OneToMany(mappedBy = "task")
     private List<Reminder> reminders = new ArrayList<>();

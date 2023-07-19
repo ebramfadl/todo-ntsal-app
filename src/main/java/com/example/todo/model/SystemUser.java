@@ -16,10 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User {
+public class SystemUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(sequenceName = "user_sequence",allocationSize = 1,name = "user_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    private Long id;
     private String username;
     private String password;
     private String email;
@@ -41,7 +43,7 @@ public class User {
     private List<Task> tasks = new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
-    private List<Group> groups = new ArrayList<>();
+    private List<Team> teams = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Issue> issues = new ArrayList<>();

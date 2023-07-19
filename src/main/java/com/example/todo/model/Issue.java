@@ -22,5 +22,5 @@ public class Issue {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private SystemUser user;
 }
