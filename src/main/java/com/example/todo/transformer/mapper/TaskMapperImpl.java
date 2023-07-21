@@ -21,6 +21,7 @@ public class TaskMapperImpl implements TaskMapper{
 
     @Autowired
     private SystemUserRepo systemUserRepo;
+    @Autowired
     private TaskRepo taskRepo;
 
     @Override

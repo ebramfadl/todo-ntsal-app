@@ -30,6 +30,21 @@ public class TaskController {
         return getService().viewAllTasks(userId);
     }
 
+    @GetMapping(path = "/view-completed/{userId}")
+    public List<TaskDto> viewCompletedTasks(@PathVariable("userId") Long userId){
+        return getService().viewCompletedTasks(userId);
+    }
+
+    @GetMapping(path = "/view-pending/{userId}")
+    public List<TaskDto> viewPendingTasks(@PathVariable("userId") Long userId){
+        return getService().viewPendingTasks(userId);
+    }
+
+    @GetMapping(path = "/view-cancelled/{userId}")
+    public List<TaskDto> viewCancelledTasks(@PathVariable("userId") Long userId){
+        return getService().viewCancelledTasks(userId);
+    }
+
     @PostMapping(path = "/create")
     public TaskDto createTask(@RequestBody TaskPostDto taskPostDto){
         return getService().create(taskPostDto);
@@ -41,8 +56,8 @@ public class TaskController {
     }
 
     @PutMapping(path = "/update/{taskId}")
-    public TaskDto updateTask(@PathVariable("taskId") Long taskId){
-        return getService().update(taskId);
+    public TaskDto updateTask(@PathVariable("taskId") Long taskId, @RequestBody TaskPostDto taskPostDto){
+        return getService().update(taskId,taskPostDto);
     }
 
     @DeleteMapping(path = "/delete/{taskId}")
@@ -50,9 +65,9 @@ public class TaskController {
         return getService().deleteTask(taskId);
     }
 
-    @GetMapping(path = "/sort/{base}/{type}")
-    public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type){
-        return getService().sort(base,type);
+    @GetMapping(path = "/sort/{base}/{type}/{userId}")
+    public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId){
+        return getService().sort(base,type,userId);
     }
 
 }

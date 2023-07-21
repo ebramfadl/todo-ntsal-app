@@ -23,17 +23,10 @@ public class Task {
     @SequenceGenerator(sequenceName = "task_sequence",allocationSize = 1,name = "task_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_sequence")
     private Long id;
-
     private String tag;
     private String description;
-
     private LocalDateTime deadline;
-//    private LocalDateTime startDate;
-//    private LocalDateTime endDate;
     private LocalDateTime dateCreated;
-//    private LocalDateTime lastModifiedDate;
-
-//    private boolean isFavorite;
 
     @Enumerated(value = EnumType.STRING)
     private TaskStatus status;
