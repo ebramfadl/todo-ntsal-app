@@ -26,5 +26,18 @@ public class Category {
     private LocalDateTime dateCreated;
 
     @OneToMany(mappedBy = "category")
-    private List<Task> tasks = new ArrayList<>();
+    private List<Task> tasks;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private SystemUser user;
+
+
+    public Category(String title, String description, SystemUser user) {
+        this.title = title;
+        this.description = description;
+        dateCreated = LocalDateTime.now();
+        tasks = new ArrayList<>();
+        this.user = user;
+    }
 }

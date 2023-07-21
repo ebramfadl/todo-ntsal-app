@@ -12,11 +12,13 @@ import com.example.todo.model.Task;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@Component
 public class TaskMapperImpl implements TaskMapper{
 
     @Autowired

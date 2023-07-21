@@ -45,6 +45,11 @@ public class TaskController {
         return getService().viewCancelledTasks(userId);
     }
 
+    @GetMapping(path = "/sort/{base}/{type}/{userId}")
+    public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId){
+        return getService().sort(base,type,userId);
+    }
+
     @PostMapping(path = "/create")
     public TaskDto createTask(@RequestBody TaskPostDto taskPostDto){
         return getService().create(taskPostDto);
@@ -65,9 +70,6 @@ public class TaskController {
         return getService().deleteTask(taskId);
     }
 
-    @GetMapping(path = "/sort/{base}/{type}/{userId}")
-    public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId){
-        return getService().sort(base,type,userId);
-    }
+
 
 }
