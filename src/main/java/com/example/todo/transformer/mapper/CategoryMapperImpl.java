@@ -21,7 +21,7 @@ public class CategoryMapperImpl implements CategoryMapper{
     @Override
     public CategoryDto entityToDto(Category category) {
 
-        return new CategoryDto(category.getTitle(),category.getDescription(),category.getUser().getId(),category.getDateCreated());
+        return new CategoryDto(category.getTitle(),category.getDescription(),category.getUser().getId(),category.getDateCreated(),category.getLastModifiedDate());
     }
 
     @Override

@@ -16,4 +16,5 @@ public class CategoryDto {
     private String description;
     private Long userId;
     private LocalDateTime dateCreated;
+    private LocalDateTime lastModifiedDate;
 }

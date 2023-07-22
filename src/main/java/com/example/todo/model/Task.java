@@ -27,7 +27,7 @@ public class Task {
     private String description;
     private LocalDateTime deadline;
     private LocalDateTime dateCreated;
-
+    private LocalDateTime lastModifiedDate;
     @Enumerated(value = EnumType.STRING)
     private TaskStatus status;
 
@@ -56,8 +56,9 @@ public class Task {
         this.priority = priority;
         this.user = user;
         this.category = category;
-        dateCreated = LocalDateTime.now();
         status = TaskStatus.PENDING;
         reminders = new ArrayList<>();
+        dateCreated = LocalDateTime.now();
+        lastModifiedDate = LocalDateTime.now();
     }
 }

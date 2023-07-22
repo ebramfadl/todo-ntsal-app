@@ -28,7 +28,7 @@ public class TaskMapperImpl implements TaskMapper{
 
     @Override
     public TaskDto entityToDto(Task task) {
-        return new TaskDto(task.getTag(),task.getDescription(),task.getDeadline(),task.getDateCreated(),task.getRepetitionType(),task.getPriority(),task.getStatus(),task.getCategory().getTitle());
+        return new TaskDto(task.getTag(),task.getDescription(),task.getDeadline(),task.getDateCreated(),task.getLastModifiedDate(),task.getRepetitionType(),task.getPriority(),task.getStatus(),task.getCategory().getTitle());
     }
 
     @Override

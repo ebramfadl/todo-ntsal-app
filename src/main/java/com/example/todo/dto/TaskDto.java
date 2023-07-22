@@ -20,6 +20,7 @@ public class TaskDto {
     private String description;
     private LocalDateTime deadline;
     private LocalDateTime dateCreated;
+    private LocalDateTime lastModifiedDate;
     @Enumerated(value = EnumType.STRING)
     private RepetitionType repetitionType;
     @Enumerated(value = EnumType.STRING)

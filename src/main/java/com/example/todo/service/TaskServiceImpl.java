@@ -14,6 +14,7 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -57,6 +58,7 @@ public class TaskServiceImpl implements TaskService{
     public boolean markAsCompleted(Long taskId) {
         Task task = getRepo().findById(taskId).get();
         task.setStatus(TaskStatus.COMPLETED);
+        task.setLastModifiedDate(LocalDateTime.now());
         return true;
     }
 
@@ -65,6 +67,7 @@ public class TaskServiceImpl implements TaskService{
     public TaskDto deleteTask(Long taskId) {
         Task task = getRepo().findById(taskId).get();
         task.setStatus(TaskStatus.CANCELLED);
+        task.setLastModifiedDate(LocalDateTime.now());
         getRepo().deleteById(taskId);
         return getMapper().entityToDto(task);
     }
@@ -111,6 +114,7 @@ public class TaskServiceImpl implements TaskService{
                 Category category = getRepo().findUserCategory(taskPostDto.getCategoryId(),task.getUser().getId());
                 task.setCategory(category);
             }
+            task.setLastModifiedDate(LocalDateTime.now());
         }
         return getMapper().entityToDto(task);
     }

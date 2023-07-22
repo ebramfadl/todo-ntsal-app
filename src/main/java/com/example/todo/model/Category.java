@@ -24,6 +24,7 @@ public class Category {
     private String description;
 
     private LocalDateTime dateCreated;
+    private LocalDateTime lastModifiedDate;
 
     @OneToMany(mappedBy = "category")
     private List<Task> tasks;
@@ -37,6 +38,7 @@ public class Category {
         this.title = title;
         this.description = description;
         dateCreated = LocalDateTime.now();
+        lastModifiedDate = LocalDateTime.now();
         tasks = new ArrayList<>();
         this.user = user;
     }
