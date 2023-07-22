@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -18,4 +20,8 @@ public interface TaskRepo extends JpaRepository<Task,Long> {
     Category findUserCategory(Long categoryId, Long userId);
 
     List<Task> findTasksByStatusAndUserId(TaskStatus status, Long userId);
+    List<Task> findByDeadlineBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
+
+    List<Task> findByDescriptionContainingIgnoreCase(String keyword);
+
 }

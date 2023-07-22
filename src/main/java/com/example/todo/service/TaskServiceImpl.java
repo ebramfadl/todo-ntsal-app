@@ -14,7 +14,9 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -134,6 +136,20 @@ public class TaskServiceImpl implements TaskService{
         if(type == SortType.DESC)
             Collections.reverse(tasks);
 
+        return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDto> viewTasksAtDay(LocalDate date) {
+        LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
+        List<Task> tasks = getRepo().findByDeadlineBetween(startOfDay, endOfDay);
+        return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDto> search(String keyword) {
+        List<Task> tasks = getRepo().findByDescriptionContainingIgnoreCase(keyword);
         return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 

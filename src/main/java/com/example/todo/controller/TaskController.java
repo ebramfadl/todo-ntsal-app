@@ -8,8 +8,10 @@ import com.example.todo.enums.SortType;
 import com.example.todo.service.TaskService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -50,6 +52,16 @@ public class TaskController {
     @GetMapping(path = "/sort/{base}/{type}/{userId}")
     public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId){
         return getService().sort(base,type,userId);
+    }
+
+    @GetMapping(path = "/view-tasks-day")
+    public List<TaskDto> viewTasksAtDay(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date){
+        return getService().viewTasksAtDay(date);
+    }
+
+    @GetMapping(path = "/search/{keyword}")
+    public List<TaskDto> search(@PathVariable("keyword") String keyword){
+        return getService().search(keyword);
     }
 
     @PostMapping(path = "/create")
