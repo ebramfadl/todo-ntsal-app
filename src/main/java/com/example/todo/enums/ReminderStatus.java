@@ -2,5 +2,5 @@ package com.example.todo.enums;
 
 public enum ReminderStatus {
 
-    DISMISSED,SNOOZED,COMPLETED
+    DISMISSED,SNOOZED,COMPLETED,PENDING
 }

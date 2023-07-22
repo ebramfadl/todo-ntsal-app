@@ -29,7 +29,7 @@ public class Reminder {
 
     private LocalDateTime dueDate;
     private LocalDateTime dateCreated;
-//    private LocalDateTime lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     @Enumerated(value = EnumType.STRING)
     private ReminderStatus status;
@@ -37,4 +37,15 @@ public class Reminder {
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
+
+    public Reminder(String title, String description, RepetitionType repetitionType, LocalDateTime dueDate, Task task) {
+        this.title = title;
+        this.description = description;
+        this.repetitionType = repetitionType;
+        this.dueDate = dueDate;
+        this.task = task;
+        dateCreated = LocalDateTime.now();
+        lastModifiedDate = LocalDateTime.now();
+        status = ReminderStatus.PENDING;
+    }
 }
