@@ -31,6 +31,9 @@ public class ReminderMapperImpl implements ReminderMapper{
         if(task == null){
             throw new IllegalStateException("Task does not exist");
         }
+        if (!reminderPostDto.getDueDate().isBefore(task.getDeadline())){
+            throw new IllegalStateException("You cannot create a reminder with a due date greater than the task deadline!");
+        }
         return new Reminder(reminderPostDto.getTitle(),reminderPostDto.getRepetitionType(),reminderPostDto.getDueDate(),task);
     }
 

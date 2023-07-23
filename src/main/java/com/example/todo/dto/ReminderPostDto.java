@@ -17,5 +17,7 @@ public class ReminderPostDto {
     @Enumerated(value = EnumType.STRING)
     private RepetitionType repetitionType;
     private LocalDateTime dueDate;
+    @Enumerated(EnumType.STRING)
+    private ReminderStatus status;
     private Long taskId;
 }

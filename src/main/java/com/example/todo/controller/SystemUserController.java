@@ -23,4 +23,5 @@ public class SystemUserController {
     public SystemUserDto register(@RequestBody SystemUserDto systemUserDto){
         return getService().register(systemUserDto);
     }
+
 }
