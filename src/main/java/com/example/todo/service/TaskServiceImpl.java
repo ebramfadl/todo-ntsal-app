@@ -20,6 +20,7 @@ import java.time.LocalTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,10 +34,11 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public TaskDto viewTask(Long id) {
-        Task task = getRepo().findById(id).get();
-        if(task == null){
+        Optional<Task> optional = getRepo().findById(id);
+        if(!optional.isPresent()){
             throw  new IllegalStateException("Task does not exist!");
         }
+        Task task = optional.get();
         return getMapper().entityToDto(task);
     }
 
@@ -49,7 +51,6 @@ public class TaskServiceImpl implements TaskService{
     @Override
     @Transactional
     public TaskDto create(TaskPostDto taskPostDto) {
-
         Task task = getMapper().dtoToEntity(taskPostDto);
         getRepo().save(task);
         return getMapper().entityToDto(task);
@@ -95,11 +96,13 @@ public class TaskServiceImpl implements TaskService{
     @Override
     @Transactional
     public TaskDto update(Long taskId, TaskPostDto taskPostDto) {
-        Task task = getRepo().findById(taskId).get();
-        if(task == null){
+        Optional<Task> optional = getRepo().findById(taskId);
+        Task task;
+        if(!optional.isPresent()){
             throw new IllegalStateException("Task does not exist!");
         }
         else {
+            task = optional.get();
             if(taskPostDto.getTag() != null)
                 task.setTag(taskPostDto.getTag());
             if (taskPostDto.getDescription() != null)

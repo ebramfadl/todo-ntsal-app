@@ -24,13 +24,11 @@ public class TaskController {
 
     @GetMapping(path = "/view-task/{id}")
     public TaskDto viewTask(@PathVariable("id") Long id){
-
         return getService().viewTask(id);
     }
 
     @GetMapping(path = "/view-all-tasks/{userId}")
     public List<TaskDto> viewAllTask(@PathVariable("userId") Long userId){
-
         return getService().viewAllTasks(userId);
     }
 

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,11 +49,13 @@ public class ReminderServiceImpl implements ReminderService{
     @Override
     @Transactional
     public ReminderDto update(Long reminderId, ReminderPostDto reminderPostDto) {
-        Reminder reminder = getRepo().findById(reminderId).get();
-        if(reminder == null){
+        Optional<Reminder> optional = getRepo().findById(reminderId);
+        Reminder reminder;
+        if(!optional.isPresent()){
             throw new IllegalStateException("Reminder does not exist!");
         }
         else {
+            reminder = optional.get();
             if (reminderPostDto.getTitle() != null)
                 reminder.setTitle(reminderPostDto.getTitle());
             if (reminderPostDto.getDescription() != null)
@@ -69,10 +72,11 @@ public class ReminderServiceImpl implements ReminderService{
 
     @Override
     public ReminderDto viewReminder(Long reminderId) {
-        Reminder reminder = getRepo().findById(reminderId).get();
-        if (reminder == null){
+        Optional<Reminder> optional = getRepo().findById(reminderId);
+        if (!optional.isPresent()){
             throw new IllegalStateException("Reminder does not exist");
         }
+        Reminder reminder = optional.get();
         return getMapper().entityToDto(reminder);
     }
 

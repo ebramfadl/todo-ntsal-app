@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,15 +37,16 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     @Transactional
     public CategoryDto update(Long categoryId,CategoryDto categoryDto) {
-        Category category = getCategoryRepo().findById(categoryId).get();
-        if(category == null){
+        Optional<Category> optional = getCategoryRepo().findById(categoryId);
+        if(!optional.isPresent()){
             throw new IllegalStateException("Category does not exist!");
         }
+        Category category = optional.get();
         if(categoryDto.getTitle() != null)
             category.setTitle(categoryDto.getTitle());
         if (categoryDto.getDescription() != null)
             category.setDescription(categoryDto.getDescription());
-
+        category.setLastModifiedDate(LocalDateTime.now());
         return getCategoryMapper().entityToDto(category);
     }
 
@@ -59,10 +61,11 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public CategoryDto viewCategory(Long categoryId) {
-        Category category = getCategoryRepo().findById(categoryId).get();
-        if(category == null){
-            throw  new IllegalStateException("Category does not exist!");
+        Optional<Category> optional = getCategoryRepo().findById(categoryId);
+        if(!optional.isPresent()){
+            throw new IllegalStateException("Category does not exist!");
         }
+        Category category = optional.get();
         return getCategoryMapper().entityToDto(category);
     }
 
