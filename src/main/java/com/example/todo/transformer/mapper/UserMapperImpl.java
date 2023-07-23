@@ -1,21 +1,21 @@
 package com.example.todo.transformer.mapper;
 
 import com.example.todo.dto.SystemUserDto;
-import com.example.todo.dto.TaskDto;
 import com.example.todo.model.SystemUser;
-import com.example.todo.model.Task;
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class SystemUserMapperImpl implements SystemUserMapper{
+public class UserMapperImpl implements UserMapper {
     @Override
     public SystemUserDto entityToDto(SystemUser systemUser) {
-        return null;
+
+        return new SystemUserDto(systemUser.getUsername(),systemUser.getPassword());
     }
 
     @Override
     public SystemUser dtoToEntity(SystemUserDto systemUserDto) {
-        return null;
+
+        return new SystemUser(systemUserDto.getUsername(),systemUserDto.getPassword());
     }
 }

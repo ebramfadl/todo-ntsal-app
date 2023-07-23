@@ -49,6 +49,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
+    @Transactional
     public CategoryDto deleteCategory(Long categoryId) {
         Category category = getCategoryRepo().findById(categoryId).get();
         category.setLastModifiedDate(LocalDateTime.now());

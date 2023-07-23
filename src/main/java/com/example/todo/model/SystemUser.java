@@ -26,9 +26,15 @@ public class SystemUser {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Task> tasks = new ArrayList<>();
+    private List<Task> tasks ;
 
     @OneToMany(mappedBy = "user")
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories ;
 
+    public SystemUser(String username, String password) {
+        this.username = username;
+        this.password = password;
+        tasks = new ArrayList<>();
+        categories = new ArrayList<>();
+    }
 }
