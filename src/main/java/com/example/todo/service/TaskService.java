@@ -29,7 +29,7 @@ public interface TaskService {
 
     List<TaskDto> sort(SortBase base, SortType type, Long userId);
 
-    List<TaskDto> viewTasksAtDay(LocalDate date);
+    List<TaskDto> viewTasksAtDay(LocalDate date, Long userId);
 
-    List<TaskDto> search(String keyword);
+    List<TaskDto> search(String keyword, Long userId);
 }

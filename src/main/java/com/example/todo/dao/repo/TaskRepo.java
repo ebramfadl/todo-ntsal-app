@@ -16,12 +16,13 @@ public interface TaskRepo extends JpaRepository<Task,Long> {
 
     List<Task> findTasksByUserId(Long userId);
 
-    @Query("select c from Category c where exists (select t from Task t where t.category.id = :categoryId and t.user.id = :userId and c.id=:categoryId )")
+    @Query("SELECT c FROM Category c WHERE c.id = :categoryId AND c.user.id = :userId")
     Category findUserCategory(Long categoryId, Long userId);
 
     List<Task> findTasksByStatusAndUserId(TaskStatus status, Long userId);
-    List<Task> findByDeadlineBetween(LocalDateTime startOfDay, LocalDateTime endOfDay);
 
-    List<Task> findByDescriptionContainingIgnoreCase(String keyword);
+    List<Task> findByDeadlineBetweenAndUserId(LocalDateTime startOfDay, LocalDateTime endOfDay,Long userId);
+
+    List<Task> findByDescriptionContainingIgnoreCaseAndUserId(String keyword,Long userId);
 
 }

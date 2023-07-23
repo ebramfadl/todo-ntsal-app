@@ -28,7 +28,11 @@ public class TaskMapperImpl implements TaskMapper{
 
     @Override
     public TaskDto entityToDto(Task task) {
-        return new TaskDto(task.getTag(),task.getDescription(),task.getDeadline(),task.getDateCreated(),task.getLastModifiedDate(),task.getRepetitionType(),task.getPriority(),task.getStatus(),task.getCategory().getTitle());
+        String categoryTitle = null;
+        if(task.getCategory() != null)
+            categoryTitle = task.getCategory().getTitle();
+
+        return new TaskDto(task.getTag(),task.getDescription(),task.getDeadline(),task.getDateCreated(),task.getLastModifiedDate(),task.getRepetitionType(),task.getPriority(),task.getStatus(),categoryTitle);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class TaskMapperImpl implements TaskMapper{
         if(user == null){
             throw new IllegalStateException("User does not exist!");
         }
-        if(category == null){
+        if(category == null && taskPostDto.getCategoryId() != null){
             throw new IllegalStateException("Category does not exist!");
         }
         if(taskPostDto.getDeadline().isBefore(LocalDateTime.now())){

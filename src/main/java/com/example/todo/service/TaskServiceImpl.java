@@ -143,16 +143,16 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<TaskDto> viewTasksAtDay(LocalDate date) {
+    public List<TaskDto> viewTasksAtDay(LocalDate date, Long userId) {
         LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
-        List<Task> tasks = getRepo().findByDeadlineBetween(startOfDay, endOfDay);
+        List<Task> tasks = getRepo().findByDeadlineBetweenAndUserId(startOfDay, endOfDay,userId);
         return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<TaskDto> search(String keyword) {
-        List<Task> tasks = getRepo().findByDescriptionContainingIgnoreCase(keyword);
+    public List<TaskDto> search(String keyword, Long userID) {
+        List<Task> tasks = getRepo().findByDescriptionContainingIgnoreCaseAndUserId(keyword,userID);
         return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 
