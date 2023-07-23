@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @Data
 public class ReminderDto {
     private String title;
-    private String description;
     private LocalDateTime dueDate;
     private LocalDateTime dateCreated;
     private LocalDateTime lastModifiedDate;

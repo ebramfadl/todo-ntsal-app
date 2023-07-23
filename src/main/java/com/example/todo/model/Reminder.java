@@ -22,7 +22,6 @@ public class Reminder {
     private Long id;
 
     private String title;
-    private String description;
 
     @Enumerated(value = EnumType.STRING)
     private RepetitionType repetitionType;
@@ -38,9 +37,8 @@ public class Reminder {
     @JoinColumn(name = "task_id")
     private Task task;
 
-    public Reminder(String title, String description, RepetitionType repetitionType, LocalDateTime dueDate, Task task) {
+    public Reminder(String title, RepetitionType repetitionType, LocalDateTime dueDate, Task task) {
         this.title = title;
-        this.description = description;
         this.repetitionType = repetitionType;
         this.dueDate = dueDate;
         this.task = task;

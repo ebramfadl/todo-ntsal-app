@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 public class ReminderPostDto {
 
     private String title;
-    private String description;
     @Enumerated(value = EnumType.STRING)
     private RepetitionType repetitionType;
     private LocalDateTime dueDate;

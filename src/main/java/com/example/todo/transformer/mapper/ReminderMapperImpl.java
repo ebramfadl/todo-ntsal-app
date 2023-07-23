@@ -22,7 +22,7 @@ public class ReminderMapperImpl implements ReminderMapper{
     @Override
     public ReminderDto entityToDto(Reminder reminder) {
 
-        return new ReminderDto(reminder.getTitle(),reminder.getDescription(),reminder.getDueDate(),reminder.getDateCreated(),reminder.getLastModifiedDate(),reminder.getRepetitionType(),reminder.getStatus());
+        return new ReminderDto(reminder.getTitle(),reminder.getDueDate(),reminder.getDateCreated(),reminder.getLastModifiedDate(),reminder.getRepetitionType(),reminder.getStatus());
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ReminderMapperImpl implements ReminderMapper{
         if(task == null){
             throw new IllegalStateException("Task does not exist");
         }
-        return new Reminder(reminderPostDto.getTitle(),reminderPostDto.getDescription(),reminderPostDto.getRepetitionType(),reminderPostDto.getDueDate(),task);
+        return new Reminder(reminderPostDto.getTitle(),reminderPostDto.getRepetitionType(),reminderPostDto.getDueDate(),task);
     }
 
 }
