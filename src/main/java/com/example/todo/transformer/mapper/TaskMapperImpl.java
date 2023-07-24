@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -37,12 +38,14 @@ public class TaskMapperImpl implements TaskMapper{
 
     @Override
     public Task dtoToEntity(TaskPostDto taskPostDto) {
-        SystemUser user = getSystemUserRepo().findById(taskPostDto.getUserId()).get();
-        Category category = getTaskRepo().findUserCategory(taskPostDto.getCategoryId(),taskPostDto.getUserId());
+        Optional<SystemUser> optional = getSystemUserRepo().findById(taskPostDto.getUserId());
 
-        if(user == null){
+        if(!optional.isPresent()){
             throw new IllegalStateException("User does not exist!");
         }
+        SystemUser user = optional.get();
+        Category category = getTaskRepo().findUserCategory(taskPostDto.getCategoryId(),taskPostDto.getUserId());
+
         if(category == null && taskPostDto.getCategoryId() != null){
             throw new IllegalStateException("Category does not exist!");
         }

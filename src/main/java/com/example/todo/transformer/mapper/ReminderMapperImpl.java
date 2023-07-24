@@ -11,6 +11,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @AllArgsConstructor
 @Data
@@ -27,10 +29,11 @@ public class ReminderMapperImpl implements ReminderMapper{
 
     @Override
     public Reminder dtoToEntity(ReminderPostDto reminderPostDto) {
-        Task task = getTaskRepo().findById(reminderPostDto.getTaskId()).get();
-        if(task == null){
+        Optional<Task> optional = getTaskRepo().findById(reminderPostDto.getTaskId());
+        if(!optional.isPresent()){
             throw new IllegalStateException("Task does not exist");
         }
+        Task task = optional.get();
         if (!reminderPostDto.getDueDate().isBefore(task.getDeadline())){
             throw new IllegalStateException("You cannot create a reminder with a due date greater than the task deadline!");
         }

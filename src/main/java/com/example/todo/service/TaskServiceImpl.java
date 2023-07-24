@@ -59,7 +59,11 @@ public class TaskServiceImpl implements TaskService{
     @Override
     @Transactional
     public boolean markAsCompleted(Long taskId) {
-        Task task = getRepo().findById(taskId).get();
+        Optional<Task> optional = getRepo().findById(taskId);
+        if (!optional.isPresent()){
+            throw new IllegalStateException("Task does not exist!");
+        }
+        Task task = optional.get();
         task.setStatus(TaskStatus.COMPLETED);
         task.setLastModifiedDate(LocalDateTime.now());
         return true;
@@ -68,7 +72,11 @@ public class TaskServiceImpl implements TaskService{
     @Override
     @Transactional
     public TaskDto deleteTask(Long taskId) {
-        Task task = getRepo().findById(taskId).get();
+        Optional<Task> optional = getRepo().findById(taskId);
+        if (!optional.isPresent()){
+            throw new IllegalStateException("Task does not exist!");
+        }
+        Task task = optional.get();
         task.setStatus(TaskStatus.CANCELLED);
         task.setLastModifiedDate(LocalDateTime.now());
         getRepo().deleteById(taskId);

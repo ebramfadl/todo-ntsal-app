@@ -40,7 +40,11 @@ public class ReminderServiceImpl implements ReminderService{
     @Override
     @Transactional
     public ReminderDto deleteReminder(Long reminderId) {
-        Reminder reminder = getRepo().findById(reminderId).get();
+        Optional<Reminder> optional = getRepo().findById(reminderId);
+        if (!optional.isPresent()){
+            throw new IllegalStateException("Reminder does not exist!");
+        }
+        Reminder reminder = optional.get();
         reminder.setLastModifiedDate(LocalDateTime.now());
         getRepo().deleteById(reminderId);
         return getMapper().entityToDto(reminder);

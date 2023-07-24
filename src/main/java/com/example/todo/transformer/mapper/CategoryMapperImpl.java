@@ -11,6 +11,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @Data
 @AllArgsConstructor
@@ -26,7 +28,11 @@ public class CategoryMapperImpl implements CategoryMapper{
 
     @Override
     public Category dtoToEntity(CategoryDto categoryDto) {
-        SystemUser user = getSystemUserRepo().findById(categoryDto.getUserId()).get();
+        Optional<SystemUser> optional = getSystemUserRepo().findById(categoryDto.getUserId());
+        if (!optional.isPresent()){
+            throw new IllegalStateException("User does not exist!");
+        }
+        SystemUser user = optional.get();
         return new Category(categoryDto.getTitle(),categoryDto.getDescription(),user);
     }
 }

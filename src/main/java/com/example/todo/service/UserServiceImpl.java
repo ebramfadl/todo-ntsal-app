@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -33,7 +34,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public SystemUserDto viewUser(Long userId) {
-        SystemUser user = getRepo().findById(userId).get();
+        Optional<SystemUser> optional = getRepo().findById(userId);
+        if (!optional.isPresent()){
+            throw new IllegalStateException("User does not exist!");
+        }
+        SystemUser user = optional.get();
         return getMapper().entityToDto(user);
     }
 }

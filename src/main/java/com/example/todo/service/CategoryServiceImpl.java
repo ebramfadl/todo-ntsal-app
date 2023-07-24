@@ -53,7 +53,11 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     @Transactional
     public CategoryDto deleteCategory(Long categoryId) {
-        Category category = getCategoryRepo().findById(categoryId).get();
+        Optional<Category> optional = getCategoryRepo().findById(categoryId);
+        if (!optional.isPresent()){
+            throw new IllegalStateException("Category does not exist!");
+        }
+        Category category = optional.get();
         category.setLastModifiedDate(LocalDateTime.now());
         getCategoryRepo().deleteById(categoryId);
         return getCategoryMapper().entityToDto(category);
