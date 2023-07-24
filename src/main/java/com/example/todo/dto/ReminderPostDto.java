@@ -13,11 +13,6 @@ import java.time.LocalDateTime;
 @Data
 public class ReminderPostDto {
 
-    private String title;
-    @Enumerated(value = EnumType.STRING)
-    private RepetitionType repetitionType;
     private LocalDateTime dueDate;
-    @Enumerated(EnumType.STRING)
-    private ReminderStatus status;
     private Long taskId;
 }

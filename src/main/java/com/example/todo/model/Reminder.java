@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Reminder {
@@ -21,29 +20,31 @@ public class Reminder {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reminder_sequence")
     private Long id;
 
-    private String title;
+    @Column(name = "description")
+    private String description;
 
-    @Enumerated(value = EnumType.STRING)
-    private RepetitionType repetitionType;
-
+    @Column(name = "due_date")
     private LocalDateTime dueDate;
+
+    @Column(name = "date_created")
     private LocalDateTime dateCreated;
+
+    @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
 
-    @Enumerated(value = EnumType.STRING)
-    private ReminderStatus status;
-
-    @ManyToOne
-    @JoinColumn(name = "task_id")
+    @OneToOne(mappedBy = "reminder")
     private Task task;
 
-    public Reminder(String title, RepetitionType repetitionType, LocalDateTime dueDate, Task task) {
-        this.title = title;
-        this.repetitionType = repetitionType;
+    public Reminder( LocalDateTime dueDate, Task task) {
         this.dueDate = dueDate;
         this.task = task;
         dateCreated = LocalDateTime.now();
         lastModifiedDate = LocalDateTime.now();
-        status = ReminderStatus.PENDING;
+    }
+
+    public String getDescription() {
+        if (task == null)
+            return "";
+        return task.getDescription();
     }
 }

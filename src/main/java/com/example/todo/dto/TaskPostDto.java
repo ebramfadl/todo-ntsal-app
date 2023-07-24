@@ -19,17 +19,11 @@ public class TaskPostDto {
     private LocalDateTime deadline;
 
     @Enumerated(value = EnumType.STRING)
-    private RepetitionType repetitionType;
-
-    @Enumerated(value = EnumType.STRING)
     private Priority priority;
-
-    @Enumerated(value = EnumType.STRING)
-    private Long categoryId;
-
-    private Long userId;
 
     @Enumerated(value = EnumType.STRING)
     private TaskStatus status;
 
+    private Long categoryId;
+    private Long userId;
 }

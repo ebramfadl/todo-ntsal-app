@@ -42,6 +42,13 @@ public class TaskServiceImpl implements TaskService{
         return getMapper().entityToDto(task);
     }
 
+    /**
+     * deleye tasks in case this user is no longer active on the system
+     */
+    void deleteTasks(){
+
+    }
+
     @Override
     public List<TaskDto> viewAllTasks(Long userId) {
         List<Task> allTasks = getRepo().findTasksByUserId(userId);
@@ -119,8 +126,6 @@ public class TaskServiceImpl implements TaskService{
                 task.setDeadline(taskPostDto.getDeadline());
             if (taskPostDto.getStatus() != null)
                 task.setStatus(taskPostDto.getStatus());
-            if (taskPostDto.getRepetitionType() != null)
-                task.setRepetitionType(taskPostDto.getRepetitionType());
             if (taskPostDto.getPriority() != null)
                 task.setPriority(taskPostDto.getPriority());
             if (taskPostDto.getCategoryId() != null){
@@ -161,6 +166,12 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public List<TaskDto> search(String keyword, Long userID) {
         List<Task> tasks = getRepo().findByDescriptionContainingIgnoreCaseAndUserId(keyword,userID);
+        return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDto> findByTag(String tag) {
+        List<Task> tasks = getRepo().findTasksByTagIgnoreCase(tag);
         return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 

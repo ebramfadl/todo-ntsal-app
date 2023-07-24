@@ -14,30 +14,43 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-@AllArgsConstructor
-@Data
 public class ReminderMapperImpl implements ReminderMapper{
 
     @Autowired
     private TaskRepo taskRepo;
 
+    public ReminderMapperImpl(TaskRepo taskRepo) {
+        this.taskRepo = taskRepo;
+    }
+
+    public TaskRepo getTaskRepo() {
+        return taskRepo;
+    }
+
     @Override
     public ReminderDto entityToDto(Reminder reminder) {
-
-        return new ReminderDto(reminder.getTitle(),reminder.getDueDate(),reminder.getDateCreated(),reminder.getLastModifiedDate(),reminder.getRepetitionType(),reminder.getStatus());
+        return new ReminderDto(reminder.getDescription(),reminder.getDueDate(),reminder.getDateCreated(),reminder.getLastModifiedDate());
     }
 
     @Override
     public Reminder dtoToEntity(ReminderPostDto reminderPostDto) {
         Optional<Task> optional = getTaskRepo().findById(reminderPostDto.getTaskId());
+        if (reminderPostDto.getTaskId() == null){
+            throw new IllegalStateException("You need to provide the task of the reminder!");
+        }
+        if (reminderPostDto.getDueDate() == null){
+            throw new IllegalStateException("You need to provide the deadline for the reminder!");
+        }
         if(!optional.isPresent()){
             throw new IllegalStateException("Task does not exist");
         }
+
         Task task = optional.get();
         if (!reminderPostDto.getDueDate().isBefore(task.getDeadline())){
             throw new IllegalStateException("You cannot create a reminder with a due date greater than the task deadline!");
         }
-        return new Reminder(reminderPostDto.getTitle(),reminderPostDto.getRepetitionType(),reminderPostDto.getDueDate(),task);
+
+        return new Reminder(reminderPostDto.getDueDate(),task);
     }
 
 }

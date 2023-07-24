@@ -32,4 +32,6 @@ public interface TaskService {
     List<TaskDto> viewTasksAtDay(LocalDate date, Long userId);
 
     List<TaskDto> search(String keyword, Long userId);
+
+    List<TaskDto> findByTag(String tag);
 }

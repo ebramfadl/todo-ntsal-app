@@ -60,14 +60,8 @@ public class ReminderServiceImpl implements ReminderService{
         }
         else {
             reminder = optional.get();
-            if (reminderPostDto.getTitle() != null)
-                reminder.setTitle(reminderPostDto.getTitle());
-            if (reminderPostDto.getRepetitionType() != null)
-                reminder.setRepetitionType(reminderPostDto.getRepetitionType());
             if (reminderPostDto.getDueDate() != null)
                 reminder.setDueDate(reminderPostDto.getDueDate());
-            if (reminderPostDto.getStatus() != null)
-                reminder.setStatus(reminderPostDto.getStatus());
 
             reminder.setLastModifiedDate(LocalDateTime.now());
         }

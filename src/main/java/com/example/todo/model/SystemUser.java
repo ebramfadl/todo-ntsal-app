@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class SystemUser {
@@ -22,7 +21,11 @@ public class SystemUser {
     @SequenceGenerator(sequenceName = "user_sequence",allocationSize = 1,name = "user_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
 
     @OneToMany(mappedBy = "user")

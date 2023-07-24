@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapperImpl implements UserMapper {
+
     @Override
     public SystemUserDto entityToDto(SystemUser systemUser) {
 
@@ -16,6 +17,9 @@ public class UserMapperImpl implements UserMapper {
     @Override
     public SystemUser dtoToEntity(SystemUserDto systemUserDto) {
 
+        if (systemUserDto.getUsername() == null || systemUserDto.getPassword() == null){
+            throw new IllegalStateException("You need to provide both username and password!");
+        }
         return new SystemUser(systemUserDto.getUsername(),systemUserDto.getPassword());
     }
 }

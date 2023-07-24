@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class TaskDto {
 
     private String tag;
@@ -21,8 +20,6 @@ public class TaskDto {
     private LocalDateTime deadline;
     private LocalDateTime dateCreated;
     private LocalDateTime lastModifiedDate;
-    @Enumerated(value = EnumType.STRING)
-    private RepetitionType repetitionType;
     @Enumerated(value = EnumType.STRING)
     private Priority priority;
     @Enumerated(value = EnumType.STRING)

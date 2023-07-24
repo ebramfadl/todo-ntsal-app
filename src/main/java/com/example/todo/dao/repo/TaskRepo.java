@@ -25,4 +25,6 @@ public interface TaskRepo extends JpaRepository<Task,Long> {
 
     List<Task> findByDescriptionContainingIgnoreCaseAndUserId(String keyword,Long userId);
 
+    List<Task> findTasksByTagIgnoreCase(String tag);
+
 }

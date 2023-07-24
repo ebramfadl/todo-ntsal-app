@@ -11,19 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "category")
 public class Category {
     @Id
     @SequenceGenerator(sequenceName = "category_sequence",allocationSize = 1,name = "category_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
     private Long id;
 
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "date_created")
     private LocalDateTime dateCreated;
+
+    @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
 
     @OneToMany(mappedBy = "category")
