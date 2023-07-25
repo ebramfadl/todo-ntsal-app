@@ -55,16 +55,30 @@ public class TaskController {
         return getService().viewCancelledTasks(userId);
     }
 
+
+    /**
+     this api views the tasks sorted based on a specific base and type
+     for example
+     sort according to PRIORITY ascendingly
+     base = SortBase.PRIORITY
+     type = SortType.ASC
+     */
     @GetMapping(path = "/sort/{base}/{type}/{userId}")
     public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId){
         return getService().sort(base,type,userId);
     }
 
+    /**
+     view the tasks that their deadline is at the specified date
+     */
     @GetMapping(path = "/day/{userId}")
     public List<TaskDto> viewTasksAtDay(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,@PathVariable("userId") Long userId){
         return getService().viewTasksAtDay(date,userId);
     }
 
+    /**
+     search according to the description of the task by a keyword
+     */
     @GetMapping(path = "/search/{keyword}/{userId}")
     public List<TaskDto> search(@PathVariable("keyword") String keyword, @PathVariable("userId") Long userId){
         return getService().search(keyword,userId);

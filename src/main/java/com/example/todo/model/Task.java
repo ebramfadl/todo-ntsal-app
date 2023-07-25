@@ -25,9 +25,11 @@ public class Task {
     @SequenceGenerator(sequenceName = "task_sequence",allocationSize = 1,name = "task_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_sequence")
     private Long id;
+
+    @Column(name = "tag", columnDefinition = "TEXT")
     private String tag;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "deadline")
@@ -35,6 +37,9 @@ public class Task {
 
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
+
+    @Column(name = "date_completed")
+    private LocalDateTime dateCompleted;
 
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;

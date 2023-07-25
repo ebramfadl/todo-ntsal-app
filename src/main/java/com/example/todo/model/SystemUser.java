@@ -22,10 +22,10 @@ public class SystemUser {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username", columnDefinition = "TEXT")
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", columnDefinition = "TEXT")
     private String password;
 
     @OneToMany(mappedBy = "user")

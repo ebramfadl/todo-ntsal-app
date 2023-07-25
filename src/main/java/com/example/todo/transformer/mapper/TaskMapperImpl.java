@@ -6,6 +6,7 @@ import com.example.todo.dao.repo.TaskRepo;
 import com.example.todo.dto.TaskDto;
 import com.example.todo.dto.TaskPostDto;
 import com.example.todo.enums.TaskStatus;
+import com.example.todo.exception.ApiRequestException;
 import com.example.todo.model.Category;
 import com.example.todo.model.SystemUser;
 import com.example.todo.model.Task;
@@ -52,19 +53,19 @@ public class TaskMapperImpl implements TaskMapper{
         Optional<SystemUser> optional = getSystemUserRepo().findById(taskPostDto.getUserId());
 
         if (taskPostDto.getDeadline() == null){
-            throw new IllegalStateException("You need to provide the dedline of the task!");
+            throw new ApiRequestException("You need to provide the dedline of the task!");
         }
         if(!optional.isPresent()){
-            throw new IllegalStateException("User does not exist!");
+            throw new ApiRequestException("User does not exist!");
         }
         SystemUser user = optional.get();
         Category category = getTaskRepo().findUserCategory(taskPostDto.getCategoryId(),taskPostDto.getUserId());
 
         if(category == null && taskPostDto.getCategoryId() != null){
-            throw new IllegalStateException("Category does not exist!");
+            throw new ApiRequestException("Category does not exist!");
         }
         if(taskPostDto.getDeadline().isBefore(LocalDateTime.now())){
-            throw new IllegalStateException("Deadline has to be after the current date!");
+            throw new ApiRequestException("Deadline has to be after the current date!");
         }
         return new Task(taskPostDto.getTag(),taskPostDto.getDescription(),taskPostDto.getDeadline(),taskPostDto.getPriority(),user,category);
     }

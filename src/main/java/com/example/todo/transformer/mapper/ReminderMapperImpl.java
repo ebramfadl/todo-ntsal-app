@@ -4,6 +4,7 @@ import com.example.todo.dao.repo.TaskRepo;
 import com.example.todo.dto.ReminderDto;
 import com.example.todo.dto.ReminderPostDto;
 import com.example.todo.dto.TaskDto;
+import com.example.todo.exception.ApiRequestException;
 import com.example.todo.model.Reminder;
 import com.example.todo.model.Task;
 import lombok.AllArgsConstructor;
@@ -36,18 +37,18 @@ public class ReminderMapperImpl implements ReminderMapper{
     public Reminder dtoToEntity(ReminderPostDto reminderPostDto) {
         Optional<Task> optional = getTaskRepo().findById(reminderPostDto.getTaskId());
         if (reminderPostDto.getTaskId() == null){
-            throw new IllegalStateException("You need to provide the task of the reminder!");
+            throw new ApiRequestException("You need to provide the task of the reminder!");
         }
         if (reminderPostDto.getDueDate() == null){
-            throw new IllegalStateException("You need to provide the deadline for the reminder!");
+            throw new ApiRequestException("You need to provide the deadline for the reminder!");
         }
         if(!optional.isPresent()){
-            throw new IllegalStateException("Task does not exist");
+            throw new ApiRequestException("Task does not exist");
         }
 
         Task task = optional.get();
         if (!reminderPostDto.getDueDate().isBefore(task.getDeadline())){
-            throw new IllegalStateException("You cannot create a reminder with a due date greater than the task deadline!");
+            throw new ApiRequestException("You cannot create a reminder with a due date greater than the task deadline!");
         }
 
         return new Reminder(reminderPostDto.getDueDate(),task);

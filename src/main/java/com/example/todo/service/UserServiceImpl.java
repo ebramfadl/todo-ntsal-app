@@ -3,6 +3,7 @@ package com.example.todo.service;
 
 import com.example.todo.dao.repo.SystemUserRepo;
 import com.example.todo.dto.SystemUserDto;
+import com.example.todo.exception.ApiRequestException;
 import com.example.todo.model.SystemUser;
 import com.example.todo.transformer.mapper.UserMapper;
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService{
     public SystemUserDto viewUser(Long userId) {
         Optional<SystemUser> optional = getRepo().findById(userId);
         if (!optional.isPresent()){
-            throw new IllegalStateException("User does not exist!");
+            throw new ApiRequestException("User does not exist!");
         }
         SystemUser user = optional.get();
         return getMapper().entityToDto(user);

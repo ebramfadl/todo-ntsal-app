@@ -19,6 +19,9 @@ public interface TaskRepo extends JpaRepository<Task,Long> {
     @Query("SELECT c FROM Category c WHERE c.id = :categoryId AND c.user.id = :userId")
     Category findUserCategory(Long categoryId, Long userId);
 
+    @Query("SELECT t FROM Task t WHERE t.status = :status AND t.user.id = :userId AND t.dateCompleted >= :oneMonthAgo")
+    List<Task> findCompletedTasksByStatusAndUserId(TaskStatus status, Long userId,LocalDateTime oneMonthAgo);
+
     List<Task> findTasksByStatusAndUserId(TaskStatus status, Long userId);
 
     List<Task> findByDeadlineBetweenAndUserId(LocalDateTime startOfDay, LocalDateTime endOfDay,Long userId);

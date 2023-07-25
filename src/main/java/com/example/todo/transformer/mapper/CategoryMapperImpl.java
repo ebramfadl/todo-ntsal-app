@@ -3,6 +3,7 @@ package com.example.todo.transformer.mapper;
 import com.example.todo.dao.repo.SystemUserRepo;
 import com.example.todo.dto.CategoryDto;
 import com.example.todo.dto.TaskDto;
+import com.example.todo.exception.ApiRequestException;
 import com.example.todo.model.Category;
 import com.example.todo.model.SystemUser;
 import com.example.todo.model.Task;
@@ -37,13 +38,13 @@ public class CategoryMapperImpl implements CategoryMapper{
     public Category dtoToEntity(CategoryDto categoryDto) {
         Optional<SystemUser> optional = getSystemUserRepo().findById(categoryDto.getUserId());
         if (!optional.isPresent()){
-            throw new IllegalStateException("User does not exist!");
+            throw new ApiRequestException("User does not exist!");
         }
         if (categoryDto.getTitle() == null){
-            throw new IllegalStateException("You need to provide a title for the category!");
+            throw new ApiRequestException("You need to provide a title for the category!");
         }
         if (categoryDto.getDescription() == null){
-            throw new IllegalStateException("You need to provide a description for the category!");
+            throw new ApiRequestException("You need to provide a description for the category!");
         }
 
         SystemUser user = optional.get();

@@ -6,6 +6,7 @@ import com.example.todo.dto.TaskPostDto;
 import com.example.todo.enums.SortBase;
 import com.example.todo.enums.SortType;
 import com.example.todo.enums.TaskStatus;
+import com.example.todo.exception.ApiRequestException;
 import com.example.todo.model.Category;
 import com.example.todo.model.Task;
 import com.example.todo.transformer.mapper.TaskMapper;
@@ -36,17 +37,10 @@ public class TaskServiceImpl implements TaskService{
     public TaskDto viewTask(Long id) {
         Optional<Task> optional = getRepo().findById(id);
         if(!optional.isPresent()){
-            throw  new IllegalStateException("Task does not exist!");
+            throw  new ApiRequestException("Task does not exist!");
         }
         Task task = optional.get();
         return getMapper().entityToDto(task);
-    }
-
-    /**
-     * deleye tasks in case this user is no longer active on the system
-     */
-    void deleteTasks(){
-
     }
 
     @Override
@@ -68,10 +62,11 @@ public class TaskServiceImpl implements TaskService{
     public boolean markAsCompleted(Long taskId) {
         Optional<Task> optional = getRepo().findById(taskId);
         if (!optional.isPresent()){
-            throw new IllegalStateException("Task does not exist!");
+            throw new ApiRequestException("Task does not exist!");
         }
         Task task = optional.get();
         task.setStatus(TaskStatus.COMPLETED);
+        task.setDateCompleted(LocalDateTime.now());
         task.setLastModifiedDate(LocalDateTime.now());
         return true;
     }
@@ -81,7 +76,7 @@ public class TaskServiceImpl implements TaskService{
     public TaskDto deleteTask(Long taskId) {
         Optional<Task> optional = getRepo().findById(taskId);
         if (!optional.isPresent()){
-            throw new IllegalStateException("Task does not exist!");
+            throw new ApiRequestException("Task does not exist!");
         }
         Task task = optional.get();
         task.setStatus(TaskStatus.CANCELLED);
@@ -92,7 +87,7 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public List<TaskDto> viewCompletedTasks(Long userId) {
-        List<Task> tasks = getRepo().findTasksByStatusAndUserId(TaskStatus.COMPLETED,userId);
+        List<Task> tasks = getRepo().findCompletedTasksByStatusAndUserId(TaskStatus.COMPLETED,userId,LocalDateTime.now().minusMonths(1));
         return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 
@@ -114,7 +109,7 @@ public class TaskServiceImpl implements TaskService{
         Optional<Task> optional = getRepo().findById(taskId);
         Task task;
         if(!optional.isPresent()){
-            throw new IllegalStateException("Task does not exist!");
+            throw new ApiRequestException("Task does not exist!");
         }
         else {
             task = optional.get();

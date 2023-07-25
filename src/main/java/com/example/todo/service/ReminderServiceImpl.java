@@ -4,6 +4,7 @@ package com.example.todo.service;
 import com.example.todo.dao.repo.ReminderRepo;
 import com.example.todo.dto.ReminderDto;
 import com.example.todo.dto.ReminderPostDto;
+import com.example.todo.exception.ApiRequestException;
 import com.example.todo.model.Category;
 import com.example.todo.model.Reminder;
 import com.example.todo.model.Task;
@@ -42,7 +43,7 @@ public class ReminderServiceImpl implements ReminderService{
     public ReminderDto deleteReminder(Long reminderId) {
         Optional<Reminder> optional = getRepo().findById(reminderId);
         if (!optional.isPresent()){
-            throw new IllegalStateException("Reminder does not exist!");
+            throw new ApiRequestException("Reminder does not exist!");
         }
         Reminder reminder = optional.get();
         reminder.setLastModifiedDate(LocalDateTime.now());
@@ -56,7 +57,7 @@ public class ReminderServiceImpl implements ReminderService{
         Optional<Reminder> optional = getRepo().findById(reminderId);
         Reminder reminder;
         if(!optional.isPresent()){
-            throw new IllegalStateException("Reminder does not exist!");
+            throw new ApiRequestException("Reminder does not exist!");
         }
         else {
             reminder = optional.get();
@@ -72,7 +73,7 @@ public class ReminderServiceImpl implements ReminderService{
     public ReminderDto viewReminder(Long reminderId) {
         Optional<Reminder> optional = getRepo().findById(reminderId);
         if (!optional.isPresent()){
-            throw new IllegalStateException("Reminder does not exist");
+            throw new ApiRequestException("Reminder does not exist");
         }
         Reminder reminder = optional.get();
         return getMapper().entityToDto(reminder);

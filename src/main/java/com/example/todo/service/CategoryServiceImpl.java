@@ -3,6 +3,7 @@ import com.example.todo.dao.repo.CategoryRepo;
 import com.example.todo.dto.CategoryDto;
 import com.example.todo.dto.TaskDto;
 import com.example.todo.enums.TaskStatus;
+import com.example.todo.exception.ApiRequestException;
 import com.example.todo.model.Category;
 import com.example.todo.model.Task;
 import com.example.todo.transformer.mapper.CategoryMapper;
@@ -39,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryDto update(Long categoryId,CategoryDto categoryDto) {
         Optional<Category> optional = getCategoryRepo().findById(categoryId);
         if(!optional.isPresent()){
-            throw new IllegalStateException("Category does not exist!");
+            throw new ApiRequestException("Category does not exist!");
         }
         Category category = optional.get();
         if(categoryDto.getTitle() != null)
@@ -55,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryDto deleteCategory(Long categoryId) {
         Optional<Category> optional = getCategoryRepo().findById(categoryId);
         if (!optional.isPresent()){
-            throw new IllegalStateException("Category does not exist!");
+            throw new ApiRequestException("Category does not exist!");
         }
         Category category = optional.get();
         category.setLastModifiedDate(LocalDateTime.now());
@@ -67,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryDto viewCategory(Long categoryId) {
         Optional<Category> optional = getCategoryRepo().findById(categoryId);
         if(!optional.isPresent()){
-            throw new IllegalStateException("Category does not exist!");
+            throw new ApiRequestException("Category does not exist!");
         }
         Category category = optional.get();
         return getCategoryMapper().entityToDto(category);
