@@ -1,14 +1,10 @@
 package com.example.todo.model;
 
 
-import com.example.todo.enums.UserRole;
-import com.example.todo.enums.UserStatus;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +28,7 @@ public class SystemUser {
     private List<Task> tasks ;
 
     @OneToMany(mappedBy = "user")
-    private List<Category> categories ;
+    private List<TodoList> categories ;
 
     public SystemUser(String username, String password) {
         this.username = username;

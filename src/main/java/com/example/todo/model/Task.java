@@ -2,16 +2,12 @@ package com.example.todo.model;
 
 
 import com.example.todo.enums.Priority;
-import com.example.todo.enums.RepetitionType;
 import com.example.todo.enums.TaskStatus;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * this model contains
@@ -26,8 +22,9 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_sequence")
     private Long id;
 
-    @Column(name = "tag", columnDefinition = "TEXT")
-    private String tag;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Tag tag;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -62,15 +59,15 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private TodoList todoList;
 
-    public Task( String tag, String description, LocalDateTime deadline, Priority priority, SystemUser user, Category category) {
+    public Task( Tag tag, String description, LocalDateTime deadline, Priority priority, SystemUser user, TodoList todoList) {
         this.tag = tag;
         this.description = description;
         this.deadline = deadline;
         this.priority = priority;
         this.user = user;
-        this.category = category;
+        this.todoList = todoList;
         status = TaskStatus.PENDING;
         dateCreated = LocalDateTime.now();
         lastModifiedDate = LocalDateTime.now();

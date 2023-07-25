@@ -1,7 +1,6 @@
 package com.example.todo.model;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +12,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
-@Table(name = "category")
-public class Category {
+@Table(name = "todo_list")
+public class TodoList {
     @Id
     @SequenceGenerator(sequenceName = "category_sequence",allocationSize = 1,name = "category_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
@@ -40,7 +39,7 @@ public class Category {
     private SystemUser user;
 
 
-    public Category(String title, String description, SystemUser user) {
+    public TodoList(String title, String description, SystemUser user) {
         this.title = title;
         this.description = description;
         dateCreated = LocalDateTime.now();

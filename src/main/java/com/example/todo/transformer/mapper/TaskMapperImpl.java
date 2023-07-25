@@ -1,17 +1,13 @@
 package com.example.todo.transformer.mapper;
 
-import com.example.todo.dao.repo.CategoryRepo;
 import com.example.todo.dao.repo.SystemUserRepo;
 import com.example.todo.dao.repo.TaskRepo;
 import com.example.todo.dto.TaskDto;
 import com.example.todo.dto.TaskPostDto;
-import com.example.todo.enums.TaskStatus;
 import com.example.todo.exception.ApiRequestException;
-import com.example.todo.model.Category;
+import com.example.todo.model.TodoList;
 import com.example.todo.model.SystemUser;
 import com.example.todo.model.Task;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,8 +38,8 @@ public class TaskMapperImpl implements TaskMapper{
     @Override
     public TaskDto entityToDto(Task task) {
         String categoryTitle = null;
-        if(task.getCategory() != null)
-            categoryTitle = task.getCategory().getTitle();
+        if(task.getTodoList() != null)
+            categoryTitle = task.getTodoList().getTitle();
 
         return new TaskDto(task.getTag(),task.getDescription(),task.getDeadline(),task.getDateCreated(),task.getLastModifiedDate(),task.getPriority(),task.getStatus(),categoryTitle);
     }
@@ -59,14 +55,14 @@ public class TaskMapperImpl implements TaskMapper{
             throw new ApiRequestException("User does not exist!");
         }
         SystemUser user = optional.get();
-        Category category = getTaskRepo().findUserCategory(taskPostDto.getCategoryId(),taskPostDto.getUserId());
+        TodoList todoList = getTaskRepo().findUserCategory(taskPostDto.getCategoryId(),taskPostDto.getUserId());
 
-        if(category == null && taskPostDto.getCategoryId() != null){
+        if(todoList == null && taskPostDto.getCategoryId() != null){
             throw new ApiRequestException("Category does not exist!");
         }
         if(taskPostDto.getDeadline().isBefore(LocalDateTime.now())){
             throw new ApiRequestException("Deadline has to be after the current date!");
         }
-        return new Task(taskPostDto.getTag(),taskPostDto.getDescription(),taskPostDto.getDeadline(),taskPostDto.getPriority(),user,category);
+        return new Task(taskPostDto.getTag(),taskPostDto.getDescription(),taskPostDto.getDeadline(),taskPostDto.getPriority(),user, todoList);
     }
 }

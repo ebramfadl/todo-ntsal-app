@@ -1,14 +1,10 @@
 package com.example.todo.transformer.mapper;
 
 import com.example.todo.dto.CategoryDto;
-import com.example.todo.dto.TaskDto;
-import com.example.todo.model.Category;
-import com.example.todo.model.Task;
-
-import java.util.Locale;
+import com.example.todo.model.TodoList;
 
 public interface CategoryMapper {
 
-    public CategoryDto entityToDto(Category category);
-    public Category dtoToEntity(CategoryDto categoryDto);
+    public CategoryDto entityToDto(TodoList todoList);
+    public TodoList dtoToEntity(CategoryDto categoryDto);
 }

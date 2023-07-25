@@ -2,13 +2,9 @@ package com.example.todo.transformer.mapper;
 
 import com.example.todo.dao.repo.SystemUserRepo;
 import com.example.todo.dto.CategoryDto;
-import com.example.todo.dto.TaskDto;
 import com.example.todo.exception.ApiRequestException;
-import com.example.todo.model.Category;
+import com.example.todo.model.TodoList;
 import com.example.todo.model.SystemUser;
-import com.example.todo.model.Task;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,13 +25,13 @@ public class CategoryMapperImpl implements CategoryMapper{
     }
 
     @Override
-    public CategoryDto entityToDto(Category category) {
+    public CategoryDto entityToDto(TodoList todoList) {
 
-        return new CategoryDto(category.getTitle(),category.getDescription(),category.getUser().getId(),category.getDateCreated(),category.getLastModifiedDate());
+        return new CategoryDto(todoList.getTitle(), todoList.getDescription(), todoList.getUser().getId(), todoList.getDateCreated(), todoList.getLastModifiedDate());
     }
 
     @Override
-    public Category dtoToEntity(CategoryDto categoryDto) {
+    public TodoList dtoToEntity(CategoryDto categoryDto) {
         Optional<SystemUser> optional = getSystemUserRepo().findById(categoryDto.getUserId());
         if (!optional.isPresent()){
             throw new ApiRequestException("User does not exist!");
@@ -48,6 +44,6 @@ public class CategoryMapperImpl implements CategoryMapper{
         }
 
         SystemUser user = optional.get();
-        return new Category(categoryDto.getTitle(),categoryDto.getDescription(),user);
+        return new TodoList(categoryDto.getTitle(),categoryDto.getDescription(),user);
     }
 }

@@ -1,11 +1,8 @@
 package com.example.todo.service;
 import com.example.todo.dao.repo.CategoryRepo;
 import com.example.todo.dto.CategoryDto;
-import com.example.todo.dto.TaskDto;
-import com.example.todo.enums.TaskStatus;
 import com.example.todo.exception.ApiRequestException;
-import com.example.todo.model.Category;
-import com.example.todo.model.Task;
+import com.example.todo.model.TodoList;
 import com.example.todo.transformer.mapper.CategoryMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,53 +27,53 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     @Transactional
     public CategoryDto create(CategoryDto categoryDto) {
-        Category category = getCategoryMapper().dtoToEntity(categoryDto);
-        getCategoryRepo().save(category);
-        return getCategoryMapper().entityToDto(category);
+        TodoList todoList = getCategoryMapper().dtoToEntity(categoryDto);
+        getCategoryRepo().save(todoList);
+        return getCategoryMapper().entityToDto(todoList);
     }
 
     @Override
     @Transactional
     public CategoryDto update(Long categoryId,CategoryDto categoryDto) {
-        Optional<Category> optional = getCategoryRepo().findById(categoryId);
+        Optional<TodoList> optional = getCategoryRepo().findById(categoryId);
         if(!optional.isPresent()){
             throw new ApiRequestException("Category does not exist!");
         }
-        Category category = optional.get();
+        TodoList todoList = optional.get();
         if(categoryDto.getTitle() != null)
-            category.setTitle(categoryDto.getTitle());
+            todoList.setTitle(categoryDto.getTitle());
         if (categoryDto.getDescription() != null)
-            category.setDescription(categoryDto.getDescription());
-        category.setLastModifiedDate(LocalDateTime.now());
-        return getCategoryMapper().entityToDto(category);
+            todoList.setDescription(categoryDto.getDescription());
+        todoList.setLastModifiedDate(LocalDateTime.now());
+        return getCategoryMapper().entityToDto(todoList);
     }
 
     @Override
     @Transactional
     public CategoryDto deleteCategory(Long categoryId) {
-        Optional<Category> optional = getCategoryRepo().findById(categoryId);
+        Optional<TodoList> optional = getCategoryRepo().findById(categoryId);
         if (!optional.isPresent()){
             throw new ApiRequestException("Category does not exist!");
         }
-        Category category = optional.get();
-        category.setLastModifiedDate(LocalDateTime.now());
+        TodoList todoList = optional.get();
+        todoList.setLastModifiedDate(LocalDateTime.now());
         getCategoryRepo().deleteById(categoryId);
-        return getCategoryMapper().entityToDto(category);
+        return getCategoryMapper().entityToDto(todoList);
     }
 
     @Override
     public CategoryDto viewCategory(Long categoryId) {
-        Optional<Category> optional = getCategoryRepo().findById(categoryId);
+        Optional<TodoList> optional = getCategoryRepo().findById(categoryId);
         if(!optional.isPresent()){
             throw new ApiRequestException("Category does not exist!");
         }
-        Category category = optional.get();
-        return getCategoryMapper().entityToDto(category);
+        TodoList todoList = optional.get();
+        return getCategoryMapper().entityToDto(todoList);
     }
 
     @Override
     public List<CategoryDto> viewAllCategories(Long userId) {
-        List<Category> categories = getCategoryRepo().findCategoriesByUserId(userId);
+        List<TodoList> categories = getCategoryRepo().findCategoriesByUserId(userId);
         return categories.stream().map(categoryMapper::entityToDto).collect(Collectors.toList());
     }
 }

@@ -7,7 +7,7 @@ import com.example.todo.enums.SortBase;
 import com.example.todo.enums.SortType;
 import com.example.todo.enums.TaskStatus;
 import com.example.todo.exception.ApiRequestException;
-import com.example.todo.model.Category;
+import com.example.todo.model.TodoList;
 import com.example.todo.model.Task;
 import com.example.todo.transformer.mapper.TaskMapper;
 import lombok.AllArgsConstructor;
@@ -124,8 +124,8 @@ public class TaskServiceImpl implements TaskService{
             if (taskPostDto.getPriority() != null)
                 task.setPriority(taskPostDto.getPriority());
             if (taskPostDto.getCategoryId() != null){
-                Category category = getRepo().findUserCategory(taskPostDto.getCategoryId(),task.getUser().getId());
-                task.setCategory(category);
+                TodoList todoList = getRepo().findUserCategory(taskPostDto.getCategoryId(),task.getUser().getId());
+                task.setTodoList(todoList);
             }
             task.setLastModifiedDate(LocalDateTime.now());
         }
