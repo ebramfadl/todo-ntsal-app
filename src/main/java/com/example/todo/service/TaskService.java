@@ -33,5 +33,5 @@ public interface TaskService {
 
     List<TaskDto> search(String keyword, Long userId);
 
-    List<TaskDto> findByTag(String tag);
+    List<TaskDto> findByTag(Long tagId);
 }

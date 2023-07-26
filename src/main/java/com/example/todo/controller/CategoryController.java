@@ -18,10 +18,12 @@ public class CategoryController {
     private final CategoryService service;
 
     public CategoryController(CategoryService service) {
+
         this.service = service;
     }
 
     public CategoryService getService() {
+
         return service;
     }
 

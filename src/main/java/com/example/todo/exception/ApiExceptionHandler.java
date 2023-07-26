@@ -9,7 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class ApiExceptionHandler {
 
     @ExceptionHandler(value = {ApiRequestException.class})

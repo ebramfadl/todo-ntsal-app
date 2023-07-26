@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,9 @@ public class SystemUser {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
 
-    @Column(name = "username", columnDefinition = "TEXT")
+    @NotNull(message = "Should not be null")
+    @Column(name = "username")
+    @Size(max = 100)
     private String username;
 
     @Column(name = "password", columnDefinition = "TEXT")

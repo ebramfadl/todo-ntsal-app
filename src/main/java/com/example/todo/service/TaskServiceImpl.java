@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.dao.repo.TagRepo;
 import com.example.todo.dao.repo.TaskRepo;
 import com.example.todo.dto.TaskDto;
 import com.example.todo.dto.TaskPostDto;
@@ -7,31 +8,35 @@ import com.example.todo.enums.SortBase;
 import com.example.todo.enums.SortType;
 import com.example.todo.enums.TaskStatus;
 import com.example.todo.exception.ApiRequestException;
+import com.example.todo.model.Tag;
 import com.example.todo.model.TodoList;
 import com.example.todo.model.Task;
 import com.example.todo.transformer.mapper.TaskMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Data
 public class TaskServiceImpl implements TaskService{
 
-    private TaskRepo repo;
-    private TaskMapper mapper;
+    private final TaskRepo repo;
+    private final TaskMapper mapper;
+    private final TagRepo tagRepo;
 
+    public TaskServiceImpl(TaskRepo repo, TaskMapper mapper, TagRepo tagRepo) {
+        this.repo = repo;
+        this.mapper = mapper;
+        this.tagRepo = tagRepo;
+    }
 
     @Override
     public TaskDto viewTask(Long id) {
@@ -113,8 +118,10 @@ public class TaskServiceImpl implements TaskService{
         }
         else {
             task = optional.get();
-            if(taskPostDto.getTag() != null)
-                task.setTag(taskPostDto.getTag());
+            if(taskPostDto.getTagId() != null){
+                Tag tag = getTagRepo().findById(taskPostDto.getTagId()).get();
+                task.setTag(tag);
+            }
             if (taskPostDto.getDescription() != null)
                 task.setDescription(taskPostDto.getDescription());
             if (taskPostDto.getDeadline() != null)
@@ -139,7 +146,7 @@ public class TaskServiceImpl implements TaskService{
              tasks.sort(Comparator.comparing(Task::getDeadline));
         }
         else if (base == SortBase.ALPHAPETICALLY){
-            tasks.sort(Comparator.comparing(Task::getTag,String.CASE_INSENSITIVE_ORDER));
+            tasks.sort(Comparator.comparing(Task::getDescription,String.CASE_INSENSITIVE_ORDER));
         }
         else if (base == SortBase.PRIORITY) {
             tasks.sort(Comparator.comparing(task -> task.getPriority().ordinal()));
@@ -165,10 +172,21 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<TaskDto> findByTag(String tag) {
-        List<Task> tasks = getRepo().findTasksByTagIgnoreCase(tag);
+    public List<TaskDto> findByTag(Long tagId) {
+        List<Task> tasks = getRepo().findTasksByTagId(tagId);
         return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 
-
+    @Scheduled(cron = "0 */5 * * * ?")
+    public void printNotification(){
+        LocalDateTime now = LocalDateTime.now();
+        List<Task> tasks = getRepo().findAll();
+        Iterator<Task> iterator = tasks.iterator();
+        while (iterator.hasNext()){
+            Task task = iterator.next();
+            if (task.getDeadline().isBefore(now)){
+                System.out.println("(User : "+task.getUser().getId()+" ) "+"(Task : "+task.getId()+" ) "+task.getDescription());
+            }
+        }
+    }
 }

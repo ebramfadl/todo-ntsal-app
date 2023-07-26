@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 public class TaskDto {
 
-    private String tag;
+    private String tagName;
     private String description;
     private LocalDateTime deadline;
     private LocalDateTime dateCreated;

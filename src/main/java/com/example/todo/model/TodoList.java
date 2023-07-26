@@ -31,7 +31,7 @@ public class TodoList {
     @Column(name = "last_modified_date")
     private LocalDateTime lastModifiedDate;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "todoList")
     private List<Task> tasks;
 
     @ManyToOne

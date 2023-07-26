@@ -15,15 +15,16 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 @Data
 public class UserServiceImpl implements UserService{
 
-    @Autowired
-    private SystemUserRepo repo;
-    @Autowired
-    private UserMapper mapper;
+    private final SystemUserRepo repo;
+    private final UserMapper mapper;
 
+    public UserServiceImpl(SystemUserRepo repo, UserMapper mapper) {
+        this.repo = repo;
+        this.mapper = mapper;
+    }
 
     @Override
     @Transactional

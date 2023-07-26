@@ -19,14 +19,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Data
 public class ReminderServiceImpl implements ReminderService{
 
-    @Autowired
-    private ReminderRepo repo;
-    @Autowired
-    private ReminderMapper mapper;
+    private final ReminderRepo repo;
+
+    private final ReminderMapper mapper;
+
+    public ReminderServiceImpl(ReminderRepo repo, ReminderMapper mapper) {
+        this.repo = repo;
+        this.mapper = mapper;
+    }
 
     @Override
     @Transactional

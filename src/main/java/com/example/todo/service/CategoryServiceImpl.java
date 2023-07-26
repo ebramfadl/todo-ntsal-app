@@ -15,14 +15,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Data
 public class CategoryServiceImpl implements CategoryService{
 
-    @Autowired
-    private CategoryRepo categoryRepo;
-    @Autowired
-    private CategoryMapper categoryMapper;
+    private final CategoryRepo categoryRepo;
+    private final CategoryMapper categoryMapper;
+
+    public CategoryServiceImpl(CategoryRepo categoryRepo, CategoryMapper categoryMapper) {
+        this.categoryRepo = categoryRepo;
+        this.categoryMapper = categoryMapper;
+    }
 
     @Override
     @Transactional

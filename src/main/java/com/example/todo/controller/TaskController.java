@@ -20,7 +20,7 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    private TaskService service;
+    private final TaskService service;
 
     public TaskController(TaskService service) {
         this.service = service;
@@ -62,10 +62,13 @@ public class TaskController {
      sort according to PRIORITY ascendingly
      base = SortBase.PRIORITY
      type = SortType.ASC
+     pageNumber = a partition of the result for example page 2 will get only the second 20 elements of the aoutput
      */
-    @GetMapping(path = "/sort/{base}/{type}/{userId}")
-    public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId){
-        return getService().sort(base,type,userId);
+    @GetMapping(path = "/sort/{base}/{type}/{pageNumber}/{userId}")
+    public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId,@PathVariable("pageNumber") Integer pageNumber){
+        List<TaskDto> allTasks = getService().sort(base,type,userId);
+        List<TaskDto> list = allTasks.subList((pageNumber-1)*20,Math.min(allTasks.size(), pageNumber*20));
+        return  list;
     }
 
     /**
@@ -84,9 +87,9 @@ public class TaskController {
         return getService().search(keyword,userId);
     }
 
-    @GetMapping(path = "/by-tag/{tag}")
-    public List<TaskDto> findByTag(@PathVariable("tag") String tag){
-        return getService().findByTag(tag);
+    @GetMapping(path = "/by-tag/{tagId}")
+    public List<TaskDto> findByTag(@PathVariable("tag") Long tagId){
+        return getService().findByTag(tagId);
     }
 
     @PostMapping

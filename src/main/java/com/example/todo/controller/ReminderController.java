@@ -13,13 +13,15 @@ import java.util.List;
 public class ReminderController {
 
     @Autowired
-    private ReminderService service;
+    private final ReminderService service;
 
     public ReminderController(ReminderService service) {
+
         this.service = service;
     }
 
     public ReminderService getService() {
+
         return service;
     }
 

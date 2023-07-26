@@ -49,13 +49,7 @@ public class Reminder {
         return task.getDescription();
     }
 
-    @Scheduled(cron = "0 */5 * * * ?")
-    public void printNotification(){
-        LocalDateTime now = LocalDateTime.now();
-        if (dueDate.isBefore(now)) {
-            System.out.println("User .. task ... reminder: "+task.getDescription());
-        }
-    }
+
 
 
 }
