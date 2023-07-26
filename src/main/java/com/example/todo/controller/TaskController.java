@@ -57,7 +57,7 @@ public class TaskController {
 
 
     /**
-     this api views the tasks sorted based on a specific base and type
+     * this api views the tasks sorted based on a specific base and type
      for example
      sort according to PRIORITY ascendingly
      base = SortBase.PRIORITY
@@ -72,7 +72,7 @@ public class TaskController {
     }
 
     /**
-     view the tasks that their deadline is at the specified date
+     * view the tasks that their deadline is at the specified date
      */
     @GetMapping(path = "/day/{userId}")
     public List<TaskDto> viewTasksAtDay(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,@PathVariable("userId") Long userId){

@@ -8,14 +8,23 @@ import lombok.Data;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Data
 public class TaskPostDto {
 
+    @NotBlank
     private Long tagId;
+
+    @NotBlank
+    @NotNull(message = "You need to provide a description")
     private String description;
+
+    @NotBlank
+    @NotNull(message = "You need to provide the deadline")
     private LocalDateTime deadline;
 
     @Enumerated(value = EnumType.STRING)
@@ -25,5 +34,7 @@ public class TaskPostDto {
     private TaskStatus status;
 
     private Long categoryId;
+
+    @NotNull(message = "You need to provide the userId")
     private Long userId;
 }

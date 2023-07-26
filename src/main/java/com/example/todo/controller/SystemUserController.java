@@ -38,7 +38,7 @@ public class SystemUserController {
     @PostMapping
     public ResponseEntity<SystemUserDto> register(@RequestBody @Valid SystemUserDto systemUserDto){
         SystemUserDto user = getService().register(systemUserDto);
-        return new ResponseEntity<SystemUserDto>(user, HttpStatus.CREATED);
+        return new ResponseEntity<SystemUserDto>(user,HttpStatus.CREATED);
     }
 
 }
