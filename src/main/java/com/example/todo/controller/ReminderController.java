@@ -4,6 +4,8 @@ package com.example.todo.controller;
 import com.example.todo.dto.*;
 import com.example.todo.service.ReminderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,27 +28,32 @@ public class ReminderController {
     }
 
     @GetMapping(path = "/{reminderId}")
-    public ReminderDto viewReminder(@PathVariable("reminderId") Long reminderId){
-        return getService().viewReminder(reminderId);
+    public ResponseEntity<ReminderDto> viewReminder(@PathVariable("reminderId") Long reminderId){
+        ReminderDto response = getService().viewReminder(reminderId);
+        return new ResponseEntity<ReminderDto>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "/by-user/{userId}")
-    public List<ReminderDto> viewAllReminders(@PathVariable("userId") Long userId){
-        return getService().viewAllReminders(userId);
+    public ResponseEntity<List<ReminderDto>> viewAllReminders(@PathVariable("userId") Long userId){
+        List<ReminderDto> response = getService().viewAllReminders(userId);
+        return new ResponseEntity<List<ReminderDto>>(response, HttpStatus.OK);
     }
 
     @PostMapping
-    public ReminderDto create(@RequestBody ReminderPostDto reminderPostDto){
-        return getService().create(reminderPostDto);
+    public ResponseEntity<ReminderDto> create(@RequestBody ReminderPostDto reminderPostDto){
+        ReminderDto response = getService().create(reminderPostDto);
+        return new ResponseEntity<ReminderDto>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{reminderId}")
-    public ReminderDto deleteReminder(@PathVariable("reminderId") Long reminderId){
-        return getService().deleteReminder(reminderId);
+    public ResponseEntity<ReminderDto> deleteReminder(@PathVariable("reminderId") Long reminderId){
+        ReminderDto response = getService().deleteReminder(reminderId);
+        return new ResponseEntity<ReminderDto>(response, HttpStatus.OK);
     }
 
     @PutMapping(path = "/{reminderId}")
-    public ReminderDto updateReminder(@PathVariable("reminderId") Long reminderId, @RequestBody ReminderPostDto reminderPostDto){
-        return getService().update(reminderId,reminderPostDto);
+    public ResponseEntity<ReminderDto> updateReminder(@PathVariable("reminderId") Long reminderId, @RequestBody ReminderPostDto reminderPostDto){
+        ReminderDto response = getService().update(reminderId,reminderPostDto);
+        return new ResponseEntity<ReminderDto>(response, HttpStatus.OK);
     }
 }

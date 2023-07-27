@@ -1,14 +1,10 @@
 package com.example.todo.controller;
 
 import com.example.todo.dto.SystemUserDto;
-import com.example.todo.exception.ApiRequestException;
 import com.example.todo.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +27,9 @@ public class SystemUserController {
     }
 
     @GetMapping(path = "/{id}")
-    public SystemUserDto viewUser(@PathVariable("id") Long id){
-        return getService().viewUser(id);
+    public ResponseEntity<SystemUserDto> viewUser(@PathVariable("id") Long id){
+        SystemUserDto response = getService().viewUser(id);
+        return new ResponseEntity<SystemUserDto>(response, HttpStatus.OK);
     }
 
     @PostMapping

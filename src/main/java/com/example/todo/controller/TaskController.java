@@ -6,10 +6,10 @@ import com.example.todo.dto.TaskPostDto;
 import com.example.todo.enums.SortBase;
 import com.example.todo.enums.SortType;
 import com.example.todo.service.TaskService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -31,28 +31,33 @@ public class TaskController {
     }
 
     @GetMapping(path = "/{id}")
-    public TaskDto viewTask(@PathVariable("id") Long id){
-        return getService().viewTask(id);
+    public ResponseEntity<TaskDto> viewTask(@PathVariable("id") Long id){
+        TaskDto response = getService().viewTask(id);
+        return new ResponseEntity<TaskDto>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "/by-user/{userId}")
-    public List<TaskDto> viewAllTask(@PathVariable("userId") Long userId){
-        return getService().viewAllTasks(userId);
+    public ResponseEntity<List<TaskDto>> viewAllTask(@PathVariable("userId") Long userId){
+        List<TaskDto> response = getService().viewAllTasks(userId);
+        return new ResponseEntity<List<TaskDto>>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "/completed/{userId}")
-    public List<TaskDto> viewCompletedTasks(@PathVariable("userId") Long userId){
-        return getService().viewCompletedTasks(userId);
+    public ResponseEntity<List<TaskDto>> viewCompletedTasks(@PathVariable("userId") Long userId){
+        List<TaskDto> response = getService().viewCompletedTasks(userId);
+        return new ResponseEntity<List<TaskDto>>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "/pending/{userId}")
-    public List<TaskDto> viewPendingTasks(@PathVariable("userId") Long userId){
-        return getService().viewPendingTasks(userId);
+    public ResponseEntity<List<TaskDto>> viewPendingTasks(@PathVariable("userId") Long userId){
+        List<TaskDto> response = getService().viewPendingTasks(userId);
+        return new ResponseEntity<List<TaskDto>>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "/cancelled/{userId}")
-    public List<TaskDto> viewCancelledTasks(@PathVariable("userId") Long userId){
-        return getService().viewCancelledTasks(userId);
+    public ResponseEntity<List<TaskDto>> viewCancelledTasks(@PathVariable("userId") Long userId){
+        List<TaskDto> response = getService().viewCancelledTasks(userId);
+        return new ResponseEntity<List<TaskDto>>(response, HttpStatus.OK);
     }
 
 
@@ -65,52 +70,58 @@ public class TaskController {
      pageNumber = a partition of the result for example page 2 will get only the second 20 elements of the aoutput
      */
     @GetMapping(path = "/sort/{base}/{type}/{pageNumber}/{userId}")
-    public List<TaskDto> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId,@PathVariable("pageNumber") Integer pageNumber){
+    public ResponseEntity<List<TaskDto>> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId,@PathVariable("pageNumber") Integer pageNumber){
         List<TaskDto> allTasks = getService().sort(base,type,userId);
         List<TaskDto> list = allTasks.subList((pageNumber-1)*20,Math.min(allTasks.size(), pageNumber*20));
-        return  list;
+        return new ResponseEntity<List<TaskDto>>(list, HttpStatus.OK);
     }
 
     /**
      * view the tasks that their deadline is at the specified date
      */
     @GetMapping(path = "/day/{userId}")
-    public List<TaskDto> viewTasksAtDay(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,@PathVariable("userId") Long userId){
-        return getService().viewTasksAtDay(date,userId);
+    public ResponseEntity<List<TaskDto>> viewTasksAtDay(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,@PathVariable("userId") Long userId){
+        List<TaskDto> response = getService().viewTasksAtDay(date,userId);
+        return new ResponseEntity<List<TaskDto>>(response, HttpStatus.OK);
     }
 
     /**
      search according to the description of the task by a keyword
      */
     @GetMapping(path = "/search/{keyword}/{userId}")
-    public List<TaskDto> search(@PathVariable("keyword") String keyword, @PathVariable("userId") Long userId){
-        return getService().search(keyword,userId);
+    public ResponseEntity<List<TaskDto>> search(@PathVariable("keyword") String keyword, @PathVariable("userId") Long userId){
+        List<TaskDto> response = getService().search(keyword,userId);
+        return new ResponseEntity<List<TaskDto>>(response, HttpStatus.OK);
     }
 
     @GetMapping(path = "/by-tag/{tagId}")
-    public List<TaskDto> findByTag(@PathVariable("tag") Long tagId){
-        return getService().findByTag(tagId);
+    public ResponseEntity<List<TaskDto>> findByTag(@PathVariable("tag") Long tagId){
+        List<TaskDto> response = getService().findByTag(tagId);
+        return new ResponseEntity<List<TaskDto>>(response, HttpStatus.OK);
     }
 
     @PostMapping
-    public TaskDto createTask(@RequestBody TaskPostDto taskPostDto){
-
-        return getService().create(taskPostDto);
+    public ResponseEntity<TaskDto> createTask(@RequestBody TaskPostDto taskPostDto){
+        TaskDto response = getService().create(taskPostDto);
+        return new ResponseEntity<TaskDto>(response, HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/complete/{taskId}")
-    public boolean markAsCompleted(@PathVariable("taskId") Long taskId){
-        return getService().markAsCompleted(taskId);
+    public ResponseEntity<Boolean> markAsCompleted(@PathVariable("taskId") Long taskId){
+        boolean response = getService().markAsCompleted(taskId);
+        return new ResponseEntity<Boolean>(response, HttpStatus.OK);
     }
 
     @PutMapping(path = "/{taskId}")
-    public TaskDto updateTask(@PathVariable("taskId") Long taskId, @RequestBody TaskPostDto taskPostDto){
-        return getService().update(taskId,taskPostDto);
+    public ResponseEntity<TaskDto> updateTask(@PathVariable("taskId") Long taskId, @RequestBody TaskPostDto taskPostDto){
+        TaskDto response = getService().update(taskId,taskPostDto);
+        return new ResponseEntity<TaskDto>(response, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{taskId}")
-    public TaskDto deleteTask(@PathVariable("taskId") Long taskId){
-        return getService().deleteTask(taskId);
+    public ResponseEntity<TaskDto> deleteTask(@PathVariable("taskId") Long taskId){
+        TaskDto response = getService().deleteTask(taskId);
+        return new ResponseEntity<TaskDto>(response, HttpStatus.OK);
     }
 
 
