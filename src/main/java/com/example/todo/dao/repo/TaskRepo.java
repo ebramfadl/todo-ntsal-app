@@ -3,6 +3,7 @@ package com.example.todo.dao.repo;
 import com.example.todo.enums.TaskStatus;
 import com.example.todo.model.TodoList;
 import com.example.todo.model.Task;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,5 +29,8 @@ public interface TaskRepo extends JpaRepository<Task,Long> {
     List<Task> findByDescriptionContainingIgnoreCaseAndUserId(String keyword,Long userId);
 
     List<Task> findTasksByTagId(Long tagId);
+
+    @Query("SELECT t FROM Task t  WHERE t.user.id =: userId")
+    List<Task> findTasksByPage(Long userId, Pageable pageable);
 
 }

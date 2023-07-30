@@ -1,12 +1,8 @@
 package com.example.todo.model;
 
 
-import com.example.todo.enums.ReminderStatus;
-import com.example.todo.enums.RepetitionType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

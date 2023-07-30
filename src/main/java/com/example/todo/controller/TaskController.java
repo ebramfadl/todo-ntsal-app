@@ -71,9 +71,8 @@ public class TaskController {
      */
     @GetMapping(path = "/sort/{base}/{type}/{pageNumber}/{userId}")
     public ResponseEntity<List<TaskDto>> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId,@PathVariable("pageNumber") Integer pageNumber){
-        List<TaskDto> allTasks = getService().sort(base,type,userId);
-        List<TaskDto> list = allTasks.subList((pageNumber-1)*20,Math.min(allTasks.size(), pageNumber*20));
-        return new ResponseEntity<List<TaskDto>>(list, HttpStatus.OK);
+        List<TaskDto> tasks = getService().sort(base,type,userId,pageNumber);
+        return new ResponseEntity<List<TaskDto>>(tasks, HttpStatus.OK);
     }
 
     /**

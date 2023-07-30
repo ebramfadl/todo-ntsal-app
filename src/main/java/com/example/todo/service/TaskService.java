@@ -27,7 +27,7 @@ public interface TaskService {
 
     TaskDto update(Long taskId, TaskPostDto taskPostDto);
 
-    List<TaskDto> sort(SortBase base, SortType type, Long userId);
+    List<TaskDto> sort(SortBase base, SortType type, Long userId,Integer pageNumber);
 
     List<TaskDto> viewTasksAtDay(LocalDate date, Long userId);
 

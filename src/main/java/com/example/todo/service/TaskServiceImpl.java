@@ -12,8 +12,9 @@ import com.example.todo.model.Tag;
 import com.example.todo.model.TodoList;
 import com.example.todo.model.Task;
 import com.example.todo.transformer.mapper.TaskMapper;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -140,8 +141,9 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<TaskDto> sort(SortBase base, SortType type, Long userId) {
-        List<Task> tasks = getRepo().findTasksByUserId(userId);
+    public List<TaskDto> sort(SortBase base, SortType type, Long userId,Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber-1,20);
+        List<Task> tasks = getRepo().findTasksByPage(userId,pageable);
         if (base == SortBase.DEADLINE){
              tasks.sort(Comparator.comparing(Task::getDeadline));
         }
