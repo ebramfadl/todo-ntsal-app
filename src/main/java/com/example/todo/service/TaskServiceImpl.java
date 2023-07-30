@@ -2,6 +2,7 @@ package com.example.todo.service;
 
 import com.example.todo.dao.repo.TagRepo;
 import com.example.todo.dao.repo.TaskRepo;
+import com.example.todo.dto.SortDto;
 import com.example.todo.dto.TaskDto;
 import com.example.todo.dto.TaskPostDto;
 import com.example.todo.enums.SortBase;
@@ -141,9 +142,11 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<TaskDto> sort(SortBase base, SortType type, Long userId,Integer pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber-1,20);
-        List<Task> tasks = getRepo().findTasksByPage(userId,pageable);
+    public List<TaskDto> sort(SortDto sortDto) {
+        Pageable pageable = PageRequest.of(sortDto.getPageNumber()-1,20);
+        List<Task> tasks = getRepo().findTasksByPage(sortDto.getUserId(),pageable);
+        SortBase base = sortDto.getBase();
+        SortType type = sortDto.getType();
         if (base == SortBase.DEADLINE){
              tasks.sort(Comparator.comparing(Task::getDeadline));
         }

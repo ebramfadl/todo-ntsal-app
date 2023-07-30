@@ -1,5 +1,6 @@
 package com.example.todo.service;
 
+import com.example.todo.dto.SortDto;
 import com.example.todo.dto.TaskDto;
 import com.example.todo.dto.TaskPostDto;
 import com.example.todo.enums.SortBase;
@@ -27,7 +28,7 @@ public interface TaskService {
 
     TaskDto update(Long taskId, TaskPostDto taskPostDto);
 
-    List<TaskDto> sort(SortBase base, SortType type, Long userId,Integer pageNumber);
+    List<TaskDto> sort(SortDto sortDto);
 
     List<TaskDto> viewTasksAtDay(LocalDate date, Long userId);
 

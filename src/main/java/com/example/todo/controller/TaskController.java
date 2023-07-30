@@ -1,6 +1,7 @@
 package com.example.todo.controller;
 
 
+import com.example.todo.dto.SortDto;
 import com.example.todo.dto.TaskDto;
 import com.example.todo.dto.TaskPostDto;
 import com.example.todo.enums.SortBase;
@@ -69,9 +70,11 @@ public class TaskController {
      type = SortType.ASC
      pageNumber = a partition of the result for example page 2 will get only the second 20 elements of the aoutput
      */
-    @GetMapping(path = "/sort/{base}/{type}/{pageNumber}/{userId}")
-    public ResponseEntity<List<TaskDto>> sortTasks(@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId,@PathVariable("pageNumber") Integer pageNumber){
-        List<TaskDto> tasks = getService().sort(base,type,userId,pageNumber);
+    //{base}/{type}/{pageNumber}/{userId}
+    //@PathVariable("base") SortBase base, @PathVariable("type") SortType type, @PathVariable("userId") Long userId,@PathVariable("pageNumber") Integer pageNumber
+    @GetMapping(path = "/sort")
+    public ResponseEntity<List<TaskDto>> sortTasks(@RequestBody SortDto sortDto){
+        List<TaskDto> tasks = getService().sort(sortDto);
         return new ResponseEntity<List<TaskDto>>(tasks, HttpStatus.OK);
     }
 
