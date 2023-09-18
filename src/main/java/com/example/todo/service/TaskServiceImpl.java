@@ -182,6 +182,13 @@ public class TaskServiceImpl implements TaskService{
         return tasks.stream().map(mapper::entityToDto).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public TaskDto deleteByTagName(String tagName) {
+        getRepo().deleteTaskByTagName(tagName);
+        return null;
+    }
+
     @Scheduled(cron = "0 */5 * * * ?")
     public void printNotification(){
         LocalDateTime now = LocalDateTime.now();
@@ -194,4 +201,7 @@ public class TaskServiceImpl implements TaskService{
             }
         }
     }
+
+
+
 }

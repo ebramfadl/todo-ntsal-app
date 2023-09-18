@@ -35,4 +35,6 @@ public interface TaskService {
     List<TaskDto> search(String keyword, Long userId);
 
     List<TaskDto> findByTag(Long tagId);
+
+    TaskDto deleteByTagName(String tagName);
 }

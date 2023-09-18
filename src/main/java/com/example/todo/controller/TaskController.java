@@ -126,6 +126,10 @@ public class TaskController {
         return new ResponseEntity<TaskDto>(response, HttpStatus.OK);
     }
 
-
+    @DeleteMapping(path = "/{tagName}")
+    public ResponseEntity<TaskDto> deleteByTagName(@PathVariable("tagName") String tagName){
+        TaskDto response = getService().deleteByTagName(tagName);
+        return new ResponseEntity<TaskDto>(response, HttpStatus.OK);
+    }
 
 }
